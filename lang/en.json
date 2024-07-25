@@ -1,0 +1,15 @@
+
+{
+  "options": "options",
+  "your_throw": "Your throw",
+  "edge": "Edge",
+  "edge_left": "Edge left",
+  "one_Hit": "$hits hits with $n dice",
+  "n_Hits": "$hits hits with $n dice",
+  "glitch": "$hits & glitch with $n dice",
+  "critical_glitch": "critical gltich with $n dice",
+  "throw": "Throw",
+  "pre-edge": "Pre-Edge",
+  "post-edge": "Post-Edge",
+  "reroll_misses": "Reroll misses"
+}
