@@ -1,4 +1,4 @@
 from SixSidedDie import SixSidedDie
 
 die = SixSidedDie()
-print(die.RollNTimes(100))
+print(die.RollNTimes(1000000))
