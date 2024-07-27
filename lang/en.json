@@ -11,5 +11,6 @@
   "throw": "Throw",
   "pre-edge": "Pre-Edge",
   "post-edge": "Post-Edge",
-  "reroll_misses": "Reroll misses"
+  "reroll_misses": "Reroll misses",
+  "lucky_roll": "Roll for edge"
 }

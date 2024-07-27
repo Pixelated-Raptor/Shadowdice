@@ -10,5 +10,6 @@
   "throw": "Würfeln",
   "pre-edge": "Pre-Edge",
   "post-edge": "Post-Edge",
-  "reroll_misses": "Nicht-Erfolge neu werfen"
+  "reroll_misses": "Nicht-Erfolge neu werfen",
+  "lucky_roll": "Gewagte Probe"
 }
