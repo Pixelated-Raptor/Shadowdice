@@ -11,5 +11,6 @@
   "pre-edge": "Pre-Edge",
   "post-edge": "Post-Edge",
   "reroll_misses": "Nicht-Erfolge neu werfen",
-  "lucky_roll": "Gewagte Probe"
+  "edge-roll": "Gewagte Probe",
+  "language": "Sprache"
 }
