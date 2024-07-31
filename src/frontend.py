@@ -1,34 +1,46 @@
 #================================================
 # Imports
 #================================================
-import customtkinter
-from SixSidedDie import SixSidedDie
+import tkinter as tk
 from translate import Translator
 
 #================================================
 # Setup
 #================================================
-customtkinter.set_appearance_mode("System")
-customtkinter.set_default_color_theme("blue")
-
-app = customtkinter.CTk()
+app = tk.Tk()
+app.title("Shadowdice")
 app.geometry("450x600")
+app.resizable(width = False, height = False)
+app.option_add("*tearOff", False)
 
-translator = Translator("../lang")
-translator.set_locale("en")
+trans = Translator("../lang")
+trans.set_locale("de")
+
 #================================================
 # Buttonfunctions
 #================================================
-def button_function():
-    print("button pressed")
+def but_func():
+    print("Button pressed")
 
-throw_btn_text = translator.translate("throw")
-throw_btn= customtkinter.CTkButton(master=app, text=throw_btn_text, command=button_function)
+#================================================
+# Widgets
+#================================================
+menubar = tk.Menu(app)
+app.config(menu = menubar)
+menu_options = tk.Menu(menubar)
+menubar.add_cascade(menu = menu_options,
+                    label = trans.translate("options"))
+menu_options.add_command(label = trans.translate("language"), 
+                         command = but_func)
+
+but = tk.Button(master = app,
+                text = trans.translate("throw"),
+                command = but_func)
 
 #================================================
 # Layout
 #================================================
-button.place(relx=0.5, rely=0.5, anchor=customtkinter.CENTER)
+but.place(relx = 0.5, rely = 0.5, anchor = tk.CENTER)
 
 #================================================
 # mainloop
