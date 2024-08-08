@@ -30,7 +30,10 @@ def but_func():
     print("Button pressed")
 
 def throw():
-    print("throw " + str(dice_pool.get()) + " dice")
+    result = bk_throw(dice_pool.get())
+    print(result)
+    print(evaluate_roll(result))
+    print("---")
 
 def pre_edge():
     print("pre edge")
