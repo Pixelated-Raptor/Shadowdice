@@ -3,6 +3,7 @@
   "your_throw": "Dein Wurf",
   "edge": "Edge",
   "edge_left": "Verbleibendes Edge",
+  "regain_edge": "Edge regenieren",
   "one_Hit": "$hits Erfolg bei $n Würfel",
   "n_Hits": "$hits Erfolge bei $n Würfel",
   "glitch": "$hits & Patzer bei $n Würfel",
@@ -12,5 +13,6 @@
   "post-edge": "Post-Edge",
   "reroll_misses": "Nicht-Erfolge neu werfen",
   "edge-roll": "Gewagte Probe",
+  "roll_for_edge": "Auf Edge werfen",
   "language": "Sprache"
 }

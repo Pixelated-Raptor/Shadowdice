@@ -4,6 +4,7 @@
   "your_throw": "Your throw",
   "edge": "Edge",
   "edge_left": "Edge left",
+  "regain_edge": "Regain edge",
   "one_Hit": "$hits hits with $n dice",
   "n_Hits": "$hits hits with $n dice",
   "glitch": "$hits & glitch with $n dice",
@@ -13,5 +14,6 @@
   "post-edge": "Post-Edge",
   "reroll_misses": "Reroll misses",
   "edge-roll": "Edge Roll",
+  "roll_for_edge": "Roll for edge",
   "language": "language"
 }
