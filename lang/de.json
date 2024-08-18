@@ -14,5 +14,8 @@
   "reroll_misses": "Nicht-Erfolge neu werfen",
   "edge-roll": "Gewagte Probe",
   "roll_for_edge": "Auf Edge werfen",
-  "language": "Sprache"
+  "language": "Sprache",
+  "game_options": "Spieleinstellungen",
+  "german": "Deutsch",
+  "english": "Englisch"
 }

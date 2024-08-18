@@ -1,6 +1,5 @@
-
 {
-  "options": "options",
+  "options": "Options",
   "your_throw": "Your throw",
   "edge": "Edge",
   "edge_left": "Edge left",
@@ -15,5 +14,8 @@
   "reroll_misses": "Reroll misses",
   "edge-roll": "Edge Roll",
   "roll_for_edge": "Roll for edge",
-  "language": "language"
+  "language": "Language",
+  "game_options": "Game Options",
+  "german": "German",
+  "english": "English"
 }

@@ -27,6 +27,7 @@ dice_pool = tk.IntVar(value = 1)
 
 big_font = ("Arial", 16)
 regular_font = ("Arial", 12)
+
 #================================================
 # Buttonfunctions
 #================================================
@@ -57,6 +58,10 @@ def roll_for_edge():
     
 def reroll_misses():
     print("reroll misses")
+
+def change_language(lang):
+    print(lang)
+    trans.set_locale(lang)
     
 #================================================
 # UI-Functions
@@ -83,7 +88,16 @@ menu_options = tk.Menu(menubar)
 menubar.add_cascade(menu = menu_options,
                     label = trans.translate("options"))
 
-menu_options.add_command(label = trans.translate("language"), 
+language_menu = tk.Menu(menu_options, tearoff = 0)
+language_menu.add_command(label = trans.translate("english"),
+                          command = lambda: change_language("en"))
+
+language_menu.add_command(label = trans.translate("german"),
+                          command = lambda: change_language("de"))
+
+menu_options.add_cascade(label = trans.translate("language"), menu = language_menu)
+
+menu_options.add_command(label = trans.translate("game_options"),
                          command = but_func)
 
 your_throw = tk.Label(master = app, text = trans.translate("your_throw"),
@@ -129,7 +143,7 @@ roll_for_edge_btn = tk.Button(master = app, text = trans.translate("roll_for_edg
 
 reroll_misses_btn = tk.Button(master = app, text = trans.translate("reroll_misses"),
                               command = reroll_misses, font = regular_font)
-
+    
 #================================================
 # Layout new
 #================================================
@@ -148,23 +162,6 @@ post_edge_btn.grid(column = 1, row = 10, columnspan = 2, sticky = "we")
 edge_roll_btn.grid(column = 1, row = 11, columnspan = 2, sticky = "we")
 roll_for_edge_btn.grid(column = 1, row = 12, columnspan = 2, sticky = "we")
 reroll_misses_btn.grid(column = 1, row = 13, columnspan = 2, sticky = "we")
-
-#================================================
-# Layout old
-#================================================
-#your_throw.grid(column = 0, row = 0)
-#dice_frame.grid(column = 0, row = 1, rowspan = 11, sticky = "nsew")
-#edge_entry.grid(column = 1, row = 1, sticky = "e")
-#edge_label.grid(column = 2, row = 1, sticky = "w")
-#edge_left.grid(column = 1, row = 2, sticky = "e")
-#edge_left_label.grid(column = 2, row = 2, sticky = "w")
-#history_frame.grid(column = 1, row = 3, rowspan = 4, columnspan = 2)
-#dice_pool_spinbox.grid(column = 1, row = 7, sticky = "e")
-#throw_btn.grid(column = 2, row = 7, sticky = "w")
-#pre_edge_btn.grid(column = 1, row = 8, stick = "ew")
-#post_edge_btn.grid(column = 2, row = 8, stick = "ew")
-#edge_roll_btn.grid(column = 1, row = 9, rowspan = 2, columnspan = 2, sticky = "ew")
-#reroll_misses_btn.grid(column = 1, row = 10, rowspan = 2, columnspan = 2, sticky = "ew")
 
 #================================================
 # mainloop
