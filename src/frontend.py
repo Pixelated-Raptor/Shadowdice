@@ -8,7 +8,7 @@ from backend import *
 from config import config
 
 #================================================
-# Setup
+# Setup and Event-Handling
 #================================================
 app_config = config()
 
@@ -21,6 +21,12 @@ app.columnconfigure(0, weight = 2)
 app.rowconfigure(1, weight = 1)
 app.columnconfigure(1, weight = 1)
 app.columnconfigure(2, weight = 1)
+
+def on_close():
+    print("bye")    
+    app.destroy()
+    
+app.protocol("WM_DELETE_WINDOW", on_close)
 
 trans = Translator("../lang")
 trans.set_locale(app_config.lang)
@@ -67,7 +73,7 @@ def change_language(lang):
     app_config.change_language(lang)    
     trans.set_locale(lang)
     showinfo(message = trans.translate("restart_app"))
-    
+
 #================================================
 # UI-Functions
 #================================================

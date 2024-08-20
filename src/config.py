@@ -29,7 +29,8 @@ class config():
 
         new_config["Locale"] = {"language": "en"}
         new_config["Gameplay"] = {
-            "bla": "blub"
+            "edge": 1,
+            "edge left": 1
         }
 
         with open(self.CONFIG_NAME, "w") as f:
@@ -41,4 +42,6 @@ class config():
         
         self.lang = config['Locale']['language']
 
+    def write_config(self):
+        # To Do
     
