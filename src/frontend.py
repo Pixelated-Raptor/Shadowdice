@@ -22,7 +22,8 @@ app.columnconfigure(1, weight = 1)
 app.columnconfigure(2, weight = 1)
 
 trans = Translator("../lang")
-#trans.set_locale("de")
+print(app_config.lang)
+trans.set_locale(app_config.lang)
 
 edge = tk.IntVar(value = 1)
 edge_left = tk.IntVar(value = edge.get())
