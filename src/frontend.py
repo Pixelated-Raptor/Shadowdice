@@ -2,6 +2,7 @@
 # Imports
 #================================================
 import tkinter as tk
+from tkinter.messagebox import showerror, showwarning, showinfo
 from translate import Translator
 from backend import *
 from config import config
@@ -63,8 +64,9 @@ def reroll_misses():
     print("reroll misses")
 
 def change_language(lang):
-    print(lang)
     app_config.change_language(lang)    
+    trans.set_locale(lang)
+    showinfo(message = trans.translate("restart_app"))
     
 #================================================
 # UI-Functions

@@ -17,5 +17,6 @@
   "language": "Language",
   "game_options": "Game Options",
   "german": "German",
-  "english": "English"
+  "english": "English",
+  "restart_app": "Restart the app for the changes to take effect."
 }

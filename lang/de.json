@@ -17,5 +17,6 @@
   "language": "Sprache",
   "game_options": "Spieleinstellungen",
   "german": "Deutsch",
-  "english": "Englisch"
+  "english": "Englisch",
+  "restart_app": "Starte die Anwendung neu, damit die Änderungen übernommen werden."
 }
