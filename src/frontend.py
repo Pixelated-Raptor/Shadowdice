@@ -4,10 +4,13 @@
 import tkinter as tk
 from translate import Translator
 from backend import *
+from config import config
 
 #================================================
 # Setup
 #================================================
+app_config = config()
+
 app = tk.Tk()
 app.title("Shadowdice")
 app.geometry("550x650")
@@ -19,7 +22,7 @@ app.columnconfigure(1, weight = 1)
 app.columnconfigure(2, weight = 1)
 
 trans = Translator("../lang")
-trans.set_locale("de")
+#trans.set_locale("de")
 
 edge = tk.IntVar(value = 1)
 edge_left = tk.IntVar(value = edge.get())
@@ -62,7 +65,10 @@ def reroll_misses():
 def change_language(lang):
     print(lang)
     trans.set_locale(lang)
-    
+    print(trans.translate("your_throw"))
+   
+    for widget in app.winfo_children():
+        widget.update()
 #================================================
 # UI-Functions
 #================================================
