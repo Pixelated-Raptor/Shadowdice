@@ -16,6 +16,14 @@ class config():
         else:
             self.create_config()
 
+    def change_language(self, lang):
+        conf = configparser.ConfigParser()
+        conf.read(self.CONFIG_NAME)
+
+        conf["Locale"]["language"] = lang
+        with open(self.CONFIG_NAME, "w") as f:
+            conf.write(f)
+    
     def create_config(self):
         new_config = configparser.ConfigParser()
 
@@ -32,3 +40,5 @@ class config():
         config.read(self.CONFIG_NAME)
         
         self.lang = config['Locale']['language']
+
+    

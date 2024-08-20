@@ -22,7 +22,6 @@ app.columnconfigure(1, weight = 1)
 app.columnconfigure(2, weight = 1)
 
 trans = Translator("../lang")
-print(app_config.lang)
 trans.set_locale(app_config.lang)
 
 edge = tk.IntVar(value = 1)
@@ -65,11 +64,8 @@ def reroll_misses():
 
 def change_language(lang):
     print(lang)
-    trans.set_locale(lang)
-    print(trans.translate("your_throw"))
-   
-    for widget in app.winfo_children():
-        widget.update()
+    app_config.change_language(lang)    
+    
 #================================================
 # UI-Functions
 #================================================
