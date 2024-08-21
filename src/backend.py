@@ -2,6 +2,9 @@ from SixSidedDie import *
 
 die = SixSidedDie()
 
+HITS = [5, 6]
+MISSES = [1]
+
 def bk_throw(dice_pool):
     return(die.RollNTimes(dice_pool))
     
@@ -24,9 +27,9 @@ def evaluate_roll(result):
     critical_glitch = False
 
     for i in result:
-        if i == 6 or i == 5:
+        if i in HITS:
             hits += 1
-        elif i == 1:
+        elif i in MISSES:
             misses += 1
             
     if misses > (len(result) / 2) and hits > 0:

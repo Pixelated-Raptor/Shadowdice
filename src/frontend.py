@@ -22,18 +22,18 @@ app.rowconfigure(1, weight = 1)
 app.columnconfigure(1, weight = 1)
 app.columnconfigure(2, weight = 1)
 
+edge = tk.IntVar(value = int(app_config.edge))
+edge_left = tk.IntVar(value = int(app_config.edge_left))
+dice_pool = tk.IntVar(value = 1)
+
 def on_close():
-    print("bye")    
+    app_config.write_on_close(edge.get(), edge_left.get())
     app.destroy()
     
 app.protocol("WM_DELETE_WINDOW", on_close)
 
 trans = Translator("../lang")
 trans.set_locale(app_config.lang)
-
-edge = tk.IntVar(value = 1)
-edge_left = tk.IntVar(value = edge.get())
-dice_pool = tk.IntVar(value = 1)
 
 big_font = ("Arial", 16)
 regular_font = ("Arial", 12)

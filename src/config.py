@@ -9,6 +9,8 @@ from os.path import exists
 class config():
     CONFIG_NAME = "Shadowdice_config.ini"
     lang = ""
+    edge = 1
+    edge_left = edge
     
     def __init__(self):
         if exists(self.CONFIG_NAME):
@@ -40,8 +42,23 @@ class config():
         config = configparser.ConfigParser()
         config.read(self.CONFIG_NAME)
         
-        self.lang = config['Locale']['language']
+        self.lang = config["Locale"]["language"]
+        self.edge = config["Gameplay"]["edge"]
+        self.edge_left = config["Gameplay"]["edge left"]
 
-    def write_config(self):
-        # To Do
+        #Plausibility Checks
+        if self.edge_left > self.edge:
+            self.edge_left = self.edge
+
+    def write_on_close(self, edge, edge_left):
+        config = configparser.ConfigParser()
+        config.read(self.CONFIG_NAME)
+
+        config["Gameplay"]["edge"] = str(edge)
+        config["Gameplay"]["edge left"] = str(edge_left)
+
+        with open(self.CONFIG_NAME, "w") as f:
+            config.write(f)
     
+    def restore_defaults(self):
+        print("ToDo")
