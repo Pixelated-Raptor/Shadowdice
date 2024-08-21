@@ -17,6 +17,9 @@ def bk_post_edge():
 def bk_edge_roll():
     print("edge_roll")
 
+def bk_roll_for_edge():
+    print("Rolling for edge")
+    
 def bk_reroll_misses():
     print("reroll misses")
 

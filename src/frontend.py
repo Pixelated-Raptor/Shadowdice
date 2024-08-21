@@ -52,7 +52,10 @@ def throw():
     draw_result(dice_frame, result)
 
 def regain_edge():
-    print("Regain 1 Edge")
+    if edge_left.get() < edge.get():
+        edge_left.set(edge_left.get() + 1)
+    elif edge_left.get() > edge.get():
+        edge_left.set(edge.get())
 
 def pre_edge():
     print("pre edge")
@@ -65,6 +68,7 @@ def edge_roll():
 
 def roll_for_edge():
     print("rolling for edge")
+    #Either full edge or edge left
     
 def reroll_misses():
     print("reroll misses")
@@ -122,8 +126,8 @@ dice_frame.grid_propagate(0)
 edge_entry = tk.Spinbox(master = app, from_ = 1, to = 99, increment = 1, width = 2,
                         textvariable = edge, font = regular_font)
 edge_label = tk.Label(master = app, text = trans.translate("edge"), font = regular_font)
-edge_left = tk.Entry(master = app, width = 2, state = "readonly", textvariable = edge_left,
-                     font = regular_font)
+edge_left_entry = tk.Entry(master = app, width = 2, state = "readonly",
+                           textvariable = edge_left, font = regular_font)
 edge_left_label = tk.Label(master = app, text = trans.translate("edge_left"), font = regular_font)
 
 regain_edge_btn = tk.Button(master = app, text = trans.translate("regain_edge"),
@@ -162,7 +166,7 @@ your_throw.grid(column = 0, row = 0)
 dice_frame.grid(column = 0, row = 1, rowspan = 13, sticky = "nsew")
 edge_entry.grid(column = 1, row = 1, sticky = "e")
 edge_label.grid(column = 2, row = 1, sticky = "w")
-edge_left.grid(column = 1, row = 2, sticky = "e")
+edge_left_entry.grid(column = 1, row = 2, sticky = "e")
 edge_left_label.grid(column = 2, row = 2, sticky = "w")
 regain_edge_btn.grid(column = 1, row = 3, columnspan = 2)
 history_frame.grid(column = 1, row = 4, columnspan = 2, rowspan = 4, sticky = "nsew")
