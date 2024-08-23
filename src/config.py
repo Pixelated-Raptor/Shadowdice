@@ -11,6 +11,8 @@ class config():
     lang = ""
     edge = 1
     edge_left = edge
+    hits = []
+    misses = []
     
     def __init__(self):
         if exists(self.CONFIG_NAME):
@@ -32,11 +34,15 @@ class config():
         new_config["Locale"] = {"language": "en"}
         new_config["Gameplay"] = {
             "edge": 1,
-            "edge left": 1
+            "edge left": 1,
+            "hits": "5,6",
+            "misses": "1"
         }
 
         with open(self.CONFIG_NAME, "w") as f:
             new_config.write(f)
+
+        self.read_config()
 
     def read_config(self):
         config = configparser.ConfigParser()
@@ -45,6 +51,11 @@ class config():
         self.lang = config["Locale"]["language"]
         self.edge = config["Gameplay"]["edge"]
         self.edge_left = config["Gameplay"]["edge left"]
+        # Hits and Misses need to be converted back to int
+        self.hits = list(config["Gameplay"]["hits"].split(","))
+        self.hits = [int(x) for x in self.hits]
+        self.misses = list(config["Gameplay"]["misses"].split(","))
+        self.misses = [int(x) for x in self.misses]
 
         #Plausibility Checks
         if self.edge_left > self.edge:
@@ -56,6 +67,8 @@ class config():
 
         config["Gameplay"]["edge"] = str(edge)
         config["Gameplay"]["edge left"] = str(edge_left)
+        config["Gameplay"]["hits"] = ",".join([str(x) for x in self.hits])
+        config["Gameplay"]["misses"] = ",".join([str(x) for x in self.misses])
 
         with open(self.CONFIG_NAME, "w") as f:
             config.write(f)

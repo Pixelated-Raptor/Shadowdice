@@ -78,6 +78,12 @@ def change_language(lang):
     trans.set_locale(lang)
     showinfo(message = trans.translate("restart_app"))
 
+def gameplayoptions():
+    gameplayoptions_window = tk.Toplevel(app)
+    gameplayoptions_window.title(trans.translate("game_options"))
+    gameplayoptions_window.geometry("400x400")
+    tk.Label(gameplayoptions_window, text = "Blaaa").pack()
+    
 #================================================
 # UI-Functions
 #================================================
@@ -113,7 +119,7 @@ language_menu.add_command(label = trans.translate("german"),
 menu_options.add_cascade(label = trans.translate("language"), menu = language_menu)
 
 menu_options.add_command(label = trans.translate("game_options"),
-                         command = but_func)
+                         command = gameplayoptions)
 
 your_throw = tk.Label(master = app, text = trans.translate("your_throw"),
                       height = 2, font = big_font)

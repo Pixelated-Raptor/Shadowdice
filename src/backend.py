@@ -1,9 +1,11 @@
 from SixSidedDie import *
+from config import config
 
 die = SixSidedDie()
+app_config = config()
 
-HITS = [5, 6]
-MISSES = [1]
+HITS = app_config.hits
+MISSES = app_config.misses
 
 def bk_throw(dice_pool):
     return(die.RollNTimes(dice_pool))
