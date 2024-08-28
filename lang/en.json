@@ -18,5 +18,7 @@
   "game_options": "Gameplay Options",
   "german": "German",
   "english": "English",
-  "restart_app": "Restart the app for the changes to take effect."
+  "restart_app": "Restart the app for the changes to take effect.",
+  "count_4": "Count 4 as a hit.",
+  "count_2": "Count 2 towards the glitches."
 }

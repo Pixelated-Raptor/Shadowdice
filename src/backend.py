@@ -25,7 +25,7 @@ def bk_roll_for_edge():
 def bk_reroll_misses():
     print("reroll misses")
 
-def evaluate_roll(result):
+def bk_evaluate_roll(result):
     hits = 0
     misses = 0
     glitch = False

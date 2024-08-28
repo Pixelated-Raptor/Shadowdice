@@ -49,8 +49,8 @@ class config():
         config.read(self.CONFIG_NAME)
         
         self.lang = config["Locale"]["language"]
-        self.edge = config["Gameplay"]["edge"]
-        self.edge_left = config["Gameplay"]["edge left"]
+        self.edge = int(config["Gameplay"]["edge"])
+        self.edge_left = int(config["Gameplay"]["edge left"])
         # Hits and Misses need to be converted back to int
         self.hits = list(config["Gameplay"]["hits"].split(","))
         self.hits = [int(x) for x in self.hits]
