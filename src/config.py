@@ -13,6 +13,7 @@ class config():
     edge_left = edge
     hits = []
     misses = []
+    use_full_edge = None;
     
     def __init__(self):
         if exists(self.CONFIG_NAME):
@@ -35,6 +36,7 @@ class config():
         new_config["Gameplay"] = {
             "edge": 1,
             "edge left": 1,
+            "use full edge": "True",
             "hits": "5,6",
             "misses": "1"
         }
@@ -51,6 +53,13 @@ class config():
         self.lang = config["Locale"]["language"]
         self.edge = int(config["Gameplay"]["edge"])
         self.edge_left = int(config["Gameplay"]["edge left"])
+        self.use_full_edge = config["Gameplay"]["use full edge"]
+        
+        if self.use_full_edge == "True":
+            self.use_full_edge = bool(True)
+        else:
+            self.use_full_edge = bool(False)
+            
         # Hits and Misses need to be converted back to int
         self.hits = list(config["Gameplay"]["hits"].split(","))
         self.hits = [int(x) for x in self.hits]
@@ -67,6 +76,7 @@ class config():
 
         config["Gameplay"]["edge"] = str(edge)
         config["Gameplay"]["edge left"] = str(edge_left)
+        config["Gameplay"]["use full edge"] = str(self.use_full_edge)
         config["Gameplay"]["hits"] = ",".join([str(x) for x in self.hits])
         config["Gameplay"]["misses"] = ",".join([str(x) for x in self.misses])
 
@@ -87,3 +97,9 @@ class config():
             self.misses.remove(2)
         else:
             self.misses.append(2)
+
+    def edge_usage(self, state):
+        if(type(state.get()) is bool):
+            self.use_full_edge = state.get()
+        else:
+            self.use_full_edge = True

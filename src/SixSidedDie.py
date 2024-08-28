@@ -17,4 +17,7 @@ class SixSidedDie:
         for i in range(n):
             result.append(self.Roll())
 
+        if(type(result) is not list):
+            result = [result]
+            
         return result

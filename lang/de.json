@@ -20,5 +20,6 @@
   "english": "Englisch",
   "restart_app": "Starte die Anwendung neu, damit die Änderungen übernommen werden.",
   "count_4": "Zähle die 4 zu den Erfolgen.",
-  "count_2": "Zähle die 2 zu den Patzern."
+  "count_2": "Zähle die 2 zu den Patzern.",
+  "use_full_edge": "Verwende das volle Edgeattribut für gewagte Proben."
 }

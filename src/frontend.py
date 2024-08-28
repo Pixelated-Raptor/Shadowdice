@@ -85,10 +85,27 @@ class frontend():
         print("post edge")
 
     def edge_roll(self):
-        print("edge roll")
-
-    def roll_for_edge(self):
         #Either full edge or edge left
+        if(self.edge_left.get() > 0):
+            self.result = self.logic.edge_roll(
+                self.app_config.use_full_edge,
+                self.edge_attribut.get(),
+                self.edge_left.get()
+            )
+            self.logic.evaluate_roll(
+                self.result,
+                self.app_config.hits,
+                self.app_config.misses
+            )
+            self.edge_left.set(self.edge_left.get() - 1)
+            
+            print(self.result)
+            print(self.logic.evaluate_roll(self.result, self.app_config.hits,
+                                       self.app_config.misses))
+            print("---")
+            self.draw_result()
+        
+    def roll_for_edge(self):
         print("roll for edge")
         
     def reroll_misses(self):
@@ -147,13 +164,13 @@ class frontend():
         self.throw_btn = tk.Button(master=self.app, text=self.trans.translate("throw"),
                                    command=self.throw, font=self.regular_font)
         self.pre_edge_btn = tk.Button(master=self.app, text=self.trans.translate("pre-edge"),
-                                      font=self.regular_font, width=12)
+                                      command=self.pre_edge, font=self.regular_font, width=12)
         self.post_edge_btn = tk.Button(master=self.app, text=self.trans.translate("post-edge"),
                                        command=self.post_edge, font=self.regular_font)
         self.edge_roll_btn = tk.Button(master=self.app, text=self.trans.translate("edge-roll"),
                                        command=self.edge_roll, font=self.regular_font)
         self.roll_for_edge_btn = tk.Button(master=self.app,
-                                           text=self.trans.translate("edge-roll"),
+                                           text=self.trans.translate("roll_for_edge"),
                                            command=self.roll_for_edge, font=self.regular_font)
         self.reroll_misses_btn = tk.Button(master=self.app,
                                            text=self.trans.translate("reroll_misses"),

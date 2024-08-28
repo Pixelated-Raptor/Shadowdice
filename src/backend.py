@@ -19,8 +19,11 @@ class backend():
     def post_edge(self):
         print("post edge")
     
-    def edge_roll(self):
-        print("edge_roll")
+    def edge_roll(self, use_full_edge, edge_attribut, edge_left):
+        if(use_full_edge):
+            return(self.throw(edge_attribut))
+        else:
+            return(self.throw(edge_left))
     
     def roll_for_edge(self):
         print("Rolling for edge")
@@ -33,7 +36,7 @@ class backend():
         misses = 0
         glitch = False
         critical_glitch = False
-    
+   
         for i in result:
             if i in HITS:
                 hits += 1
