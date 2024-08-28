@@ -23,6 +23,17 @@ class gameplayoptions():
         
         self.hits4_state = tk.BooleanVar(master=self.win)
         self.miss2_state= tk.BooleanVar(master=self.win)
+
+        # Checks the checkboxes if these were activated before
+        if(4 in self.app_config.hits):
+            self.hits4_state.set(1)
+        else:
+            self.hits4_state.set(0)
+
+        if(2 in self.app_config.misses):
+            self.miss2_state.set(1)
+        else:
+            self.miss2_state.set(0)
         
     def hit_on_4(self):
         self.app_config.hit_on_4(self.hits4_state.get())
@@ -40,13 +51,11 @@ class gameplayoptions():
 
     def init_widgets(self):
         self.hits4_check = tk.Checkbutton(master=self.win, text=self.trans.translate("count_4"),
-                                          command=self.hit_on_4)
-                                          #variable=self.hits4_state,
-                                          #onvalue=True, offvalue=False)
+                                          command=self.hit_on_4,
+                                          variable=self.hits4_state)
         self.miss2_check = tk.Checkbutton(master=self.win, text=self.trans.translate("count_2"),
-                                          command=self.miss_on_2)
-                                          #variable=self.miss2_state,
-                                          #onvalue=True, offvalue=False)
+                                          command=self.miss_on_2,
+                                          variable=self.miss2_state)
 
     def layout(self):
         self.hits4_check.grid(column=0, row=0)

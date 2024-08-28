@@ -81,11 +81,7 @@ class config():
             self.hits.remove(4)
         else:
             self.hits.append(4)
-        #if(checked):
-        #    self.hits.append(4)
-        #else:
-        #    self.hits.remove(4)
-
+            
     def miss_on_2(self, checked):
         if(2 in self.misses):
             self.misses.remove(2)
