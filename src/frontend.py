@@ -8,7 +8,7 @@ from tkinter.messagebox import showerror, showwarning, showinfo
 from translate import Translator
 from backend import *
 from config import config
-from gameplayoptions_window import *
+from gameplayoptions_window import gameplayoptions
 
 class frontend():
     app_config = None; app = None
@@ -18,6 +18,8 @@ class frontend():
 
     big_font = ("Arial", 16)
     regular_font = ("Arial", 12)
+
+    gameplayoptions = None
 
     # Widgets
     menubar = None; menu_options = None
@@ -46,6 +48,8 @@ class frontend():
         self.app.columnconfigure(1, weight=1)
         self.app.columnconfigure(2, weight=1)
         self.app.protocol("WM_DELETE_WINDOW", self.on_close)
+
+        self.gameplayoptions = gameplayoptions(self.app, self.trans, self.app_config)
         
         self.edge_attribut = tk.IntVar(value=self.app_config.edge)
         self.edge_left = tk.IntVar(value=self.app_config.edge_left)
@@ -93,7 +97,8 @@ class frontend():
         showinfo(message=self.trans.translate("restart_app"))
 
     def spawn_gameplayoptions(self):
-        spawn_gameplayoptions_window(self.app, self.trans, self.app_config)
+        #spawn_gameplayoptions_window(self.app, self.trans, self.app_config)
+        self.gameplayoptions.spawn_gameplayoptions()
 
     ###########################################################################
     def init_widgets(self):

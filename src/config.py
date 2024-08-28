@@ -75,3 +75,19 @@ class config():
     
     def restore_defaults(self):
         print("ToDo")
+
+    def hit_on_4(self, checked):
+        if(4 in self.hits):
+            self.hits.remove(4)
+        else:
+            self.hits.append(4)
+        #if(checked):
+        #    self.hits.append(4)
+        #else:
+        #    self.hits.remove(4)
+
+    def miss_on_2(self, checked):
+        if(2 in self.misses):
+            self.misses.remove(2)
+        else:
+            self.misses.append(2)
