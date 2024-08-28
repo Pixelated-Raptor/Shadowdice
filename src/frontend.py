@@ -85,7 +85,6 @@ class frontend():
         print("post edge")
 
     def edge_roll(self):
-        #Either full edge or edge left
         if(self.edge_left.get() > 0):
             self.result = self.logic.edge_roll(
                 self.app_config.use_full_edge,
@@ -107,7 +106,7 @@ class frontend():
         
     def roll_for_edge(self):
         #In cases when the Gamemaster wants to know how lucky
-        #the player is
+        #the player is. Does not consume edge.
         self.result = self.logic.roll_for_edge(self.edge_attribut.get())
         self.logic.evaluate_roll(self.result,
                                  self.app_config.hits,

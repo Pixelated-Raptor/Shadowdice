@@ -20,17 +20,35 @@ class backend():
         print("post edge")
     
     def edge_roll(self, use_full_edge, edge_attribut, edge_left):
+        #Use either the full edge attribut or only edge left as dice pool
+        result = []
         if(use_full_edge):
-            return(self.throw(edge_attribut))
+            result = self.throw(edge_attribut)
         else:
-            return(self.throw(edge_left))
-    
+            result = self.throw(edge_left)
+
+        result += self.apply_exploding_sixes(result)
+
+        return result
+
+        
     def roll_for_edge(self, edge):
         return(self.throw(edge))
         
     def reroll_misses(self):
         print("reroll misses")
-    
+
+    def apply_exploding_sixes(self, pool):
+        sixes = pool.count(6)
+        res = []
+        while sixes != 0:
+            temp = self.throw(sixes)
+            sixes = temp.count(6)
+            res += temp
+        
+        return res
+            
+                
     def evaluate_roll(self, result, HITS, MISSES):
         hits = 0
         misses = 0
