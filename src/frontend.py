@@ -106,8 +106,19 @@ class frontend():
             self.draw_result()
         
     def roll_for_edge(self):
-        print("roll for edge")
+        #In cases when the Gamemaster wants to know how lucky
+        #the player is
+        self.result = self.logic.roll_for_edge(self.edge_attribut.get())
+        self.logic.evaluate_roll(self.result,
+                                 self.app_config.hits,
+                                 self.app_config.misses)
         
+        print(self.result)
+        print(self.logic.evaluate_roll(self.result, self.app_config.hits,
+                                       self.app_config.misses))
+        print("---")
+        self.draw_result()
+            
     def reroll_misses(self):
         print("Reroll misses")
 

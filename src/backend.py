@@ -25,8 +25,8 @@ class backend():
         else:
             return(self.throw(edge_left))
     
-    def roll_for_edge(self):
-        print("Rolling for edge")
+    def roll_for_edge(self, edge):
+        return(self.throw(edge))
         
     def reroll_misses(self):
         print("reroll misses")
