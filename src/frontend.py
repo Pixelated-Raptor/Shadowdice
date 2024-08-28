@@ -6,7 +6,7 @@
 import tkinter as tk
 from tkinter.messagebox import showerror, showwarning, showinfo
 from translate import Translator
-from backend import *
+from backend import backend
 from config import config
 from gameplayoptions_window import gameplayoptions
 
@@ -14,12 +14,13 @@ class frontend():
     app_config = None; app = None
     trans = None; edge_attribut = None
     edge_left = None; dice_pool = None
-    result = None
+    result = None;
 
     big_font = ("Arial", 16)
     regular_font = ("Arial", 12)
 
     gameplayoptions = None
+    logic = None
 
     # Widgets
     menubar = None; menu_options = None
@@ -49,6 +50,7 @@ class frontend():
         self.app.columnconfigure(2, weight=1)
         self.app.protocol("WM_DELETE_WINDOW", self.on_close)
 
+        self.logic = backend()
         self.gameplayoptions = gameplayoptions(self.app, self.trans, self.app_config)
         
         self.edge_attribut = tk.IntVar(value=self.app_config.edge)
@@ -63,9 +65,10 @@ class frontend():
         print("Button pressed")
 
     def throw(self):
-        self.result = bk_throw(self.dice_pool.get())        
+        self.result = self.logic.throw(self.dice_pool.get())        
         print(self.result)
-        print(bk_evaluate_roll(self.result))
+        print(self.logic.evaluate_roll(self.result, self.app_config.hits,
+                                       self.app_config.misses))
         print("---")
         self.draw_result()
         
