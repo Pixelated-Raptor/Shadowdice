@@ -195,7 +195,7 @@ class frontend():
                                       command=self.spawn_gameplayoptions)
         self.your_throw = tk.Label(master=self.app, text=self.trans.translate("your_throw"),
                                    height=2, font=self.big_font)
-        self.dice_frame = tk.Frame(master=self.app, width=250,
+        self.dice_frame = tk.Frame(master=self.app, width=250, background="white",
                                    borderwidth=2, relief="groove")
         self.dice_frame.grid_propagate(0)
         self.edge_attribut_spin = tk.Spinbox(master=self.app, from_=1, to=99,
