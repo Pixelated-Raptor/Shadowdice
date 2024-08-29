@@ -13,8 +13,16 @@ class backend():
     def throw(self, dice_pool):
         return(self.die.RollNTimes(dice_pool))
     
-    def pre_edge(self):
-        print("pre edge")
+    def pre_edge(self, use_full_edge, pool, edge_attribut, edge_left):
+        result = []
+        if(use_full_edge):
+            result = self.throw(pool + edge_attribut)
+        else:
+            result = self.throw(pool + edge_left)
+
+        result += self.apply_exploding_sixes(result)
+
+        return result
     
     def post_edge(self):
         print("post edge")

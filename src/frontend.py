@@ -79,7 +79,21 @@ class frontend():
             self.edge_left.set(self.edge_attribut.get())
 
     def pre_edge(self):
-        print("pre edge")
+        #Set your dice pool, then click pre edge to throw with edge dice
+        if(self.edge_left.get() > 0):
+            self.result = self.logic.pre_edge(
+                            self.app_config.use_full_edge,
+                            self.dice_pool.get(),
+                            self.edge_attribut.get(),
+                            self.edge_left.get())
+
+            self.edge_left.set(self.edge_left.get() - 1)
+            
+            print(self.result)
+            print(self.logic.evaluate_roll(self.result, self.app_config.hits,
+                                       self.app_config.misses))
+            print("---")
+            self.draw_result()
 
     def post_edge(self):
         print("post edge")
@@ -87,14 +101,14 @@ class frontend():
     def edge_roll(self):
         if(self.edge_left.get() > 0):
             self.result = self.logic.edge_roll(
-                self.app_config.use_full_edge,
-                self.edge_attribut.get(),
-                self.edge_left.get()
-            )
+                            self.app_config.use_full_edge,
+                            self.edge_attribut.get(),
+                            self.edge_left.get())
+            
             self.logic.evaluate_roll(
-                self.result,
-                self.app_config.hits,
-                self.app_config.misses
+                            self.result,
+                            self.app_config.hits,
+                            self.app_config.misses
             )
             self.edge_left.set(self.edge_left.get() - 1)
             
