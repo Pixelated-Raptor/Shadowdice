@@ -96,7 +96,19 @@ class frontend():
             self.draw_result()
 
     def post_edge(self):
-        print("post edge")
+        if(self.edge_left.get() > 0):
+            self.result += self.logic.post_edge(
+                                self.app_config.use_full_edge,
+                                self.edge_attribut.get(),
+                                self.edge_left.get())
+
+            self.edge_left.set(self.edge_left.get() - 1)
+            
+            print(self.result)
+            print(self.logic.evaluate_roll(self.result, self.app_config.hits,
+                                       self.app_config.misses))
+            print("---")
+            self.draw_result()
 
     def edge_roll(self):
         if(self.edge_left.get() > 0):

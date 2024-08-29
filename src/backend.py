@@ -24,9 +24,17 @@ class backend():
 
         return result
     
-    def post_edge(self):
-        print("post edge")
-    
+    def post_edge(self, use_full_edge, edge_attribut, edge_left):
+        result = []
+        if(use_full_edge):
+            result = self.throw(edge_attribut)
+        else:
+            result = self.throw(edge_left)
+
+        result += self.apply_exploding_sixes(result)
+
+        return result
+        
     def edge_roll(self, use_full_edge, edge_attribut, edge_left):
         #Use either the full edge attribut or only edge left as dice pool
         result = []
@@ -65,12 +73,14 @@ class backend():
         
         return res
             
-                
     def evaluate_roll(self, result, HITS, MISSES):
         hits = 0
         misses = 0
         glitch = False
         critical_glitch = False
+
+        print("Eva Hits: " + str(HITS))
+        print("Eva Misses: " + str(MISSES))
    
         for i in result:
             if i in HITS:
