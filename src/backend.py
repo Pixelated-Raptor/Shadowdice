@@ -35,9 +35,18 @@ class backend():
     def roll_for_edge(self, edge):
         return(self.throw(edge))
         
-    def reroll_misses(self):
-        print("reroll misses")
+    def reroll_misses(self, pool, hits):
+        new_pool = 0
+        for x in hits:
+            new_pool += pool.count(x)
+        
+        new_pool = len(pool) - new_pool
 
+        result = self.throw(new_pool)
+        result += self.apply_exploding_sixes(result)
+
+        return result
+        
     def apply_exploding_sixes(self, pool):
         sixes = pool.count(6)
         res = []

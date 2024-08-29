@@ -119,7 +119,28 @@ class frontend():
         self.draw_result()
             
     def reroll_misses(self):
-        print("Reroll misses")
+        #Only allow rerolling if there are any misses
+        hits = 0
+        for x in self.app_config.hits:
+            hits += self.result.count(x)
+
+        if(hits != len(self.result)):        
+            if(self.edge_left.get() > 0):
+                #Extract hits from current pool as to not lose them
+                temp = [x for x in self.result if x in self.app_config.hits] 
+                
+                self.result = self.logic.reroll_misses(self.result, self.app_config.hits)
+                self.logic.evaluate_roll(self.result,
+                                         self.app_config.hits,
+                                         self.app_config.misses)
+                self.result = temp + self.result
+                self.edge_left.set(self.edge_left.get() - 1)
+                
+                print(self.result)
+                print(self.logic.evaluate_roll(self.result, self.app_config.hits,
+                                               self.app_config.misses))
+                print("---")
+                self.draw_result()
 
     def change_language(self, lang):
         self.app_config.change_language(lang)
