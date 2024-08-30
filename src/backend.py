@@ -3,6 +3,7 @@
 #================================================
 from SixSidedDie import *
 from config import config
+from PIL import ImageTk, Image
 
 class backend():
     die = None
@@ -94,3 +95,51 @@ class backend():
             critical_glitch = True
     
         return(hits, misses, glitch,critical_glitch)
+
+    def merge_die(self, result):
+        #Path to files here
+        one = Image.open("../Assets/Black_Die_Dotted/One_Dot.png")   
+        two = Image.open("../Assets/Black_Die_Dotted/Two_Dot.png")   
+        three = Image.open("../Assets/Black_Die_Dotted/Three_Dot.png")   
+        four = Image.open("../Assets/Black_Die_Dotted/Four_Dot.png")   
+        five = Image.open("../Assets/Black_Die_Dotted/Five_Dot.png")   
+        six = Image.open("../Assets/Black_Die_Dotted/Six_Dot.png")   
+        
+        num2words = {
+            1: one, 2: two, 3: three,
+            4: four, 5: five, 6: six
+        }
+        #Determine dimensions of resulting image
+        if(len(result) == 1):
+            width = one.size[0]
+            columns = 1
+        elif(len(result) == 2):
+            width = one.size[0] * 2
+            columns = 2
+        else:
+            width = one.size[0] * 3
+            columns = 3
+
+        rows = -(-len(result) // 3)
+        height = rows * one.size[1]
+        
+        #Stitch images
+        image = Image.new("RGBA", (width, height))
+        x = 0; y = 0; index = 0
+        
+        for i in range(len(result)):
+            for row in range(rows):
+                for column in range(columns):
+                    if index < len(result):
+                        im = num2words[result[index]]
+                        image.paste(im, (x, y))
+                        x += one.size[0]
+                        index += 1
+
+                x = 0
+                y += one.size[1]
+
+
+        image = image.resize((int(width*0.17), int(height*0.17)))
+        image = ImageTk.PhotoImage(image=image)
+        return image

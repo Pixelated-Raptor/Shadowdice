@@ -25,13 +25,14 @@ class frontend():
     # Widgets
     menubar = None; menu_options = None
     language_menu = None; your_throw = None
-    dice_frame = None; edge_attribut_spin = None    
+    dice_canvas = None; edge_attribut_spin = None    
     edge_attribut_label = None; edge_left_entry = None
     edge_left_label = None; regain_edge_btn = None
     history_frame = None; dice_pool_spin = None
     throw_btn = None; pre_edge_btn = None
     post_edge_btn = None; edge_roll_btn = None
     roll_for_edge_btn = None; reroll_misses_btn = None
+    die_image = None
     
     def __init__(self):
         self.app_config = config()
@@ -195,9 +196,9 @@ class frontend():
                                       command=self.spawn_gameplayoptions)
         self.your_throw = tk.Label(master=self.app, text=self.trans.translate("your_throw"),
                                    height=2, font=self.big_font)
-        self.dice_frame = tk.Frame(master=self.app, width=250, background="white",
+        self.dice_canvas = tk.Canvas(master=self.app, width=250, background="white",
                                    borderwidth=2, relief="groove")
-        self.dice_frame.grid_propagate(0)
+        self.dice_canvas.grid_propagate(0)
         self.edge_attribut_spin = tk.Spinbox(master=self.app, from_=1, to=99,
                                              increment=1, width=2,
                                              textvariable=self.edge_attribut,
@@ -236,7 +237,7 @@ class frontend():
         
     def layout(self):
         self.your_throw.grid(column = 0, row = 0)
-        self.dice_frame.grid(column = 0, row = 1, rowspan = 13, sticky = "nsew")
+        self.dice_canvas.grid(column = 0, row = 1, rowspan = 13, sticky = "nsew")
         self.edge_attribut_spin.grid(column = 1, row = 1, sticky = "e")
         self.edge_attribut_label.grid(column = 2, row = 1, sticky = "w")
         self.edge_left_entry.grid(column = 1, row = 2, sticky = "e")
@@ -252,14 +253,21 @@ class frontend():
         self.reroll_misses_btn.grid(column = 1, row = 13, columnspan = 2, sticky = "we")
         
     def draw_result(self):
-        for widget in self.dice_frame.winfo_children():
+        for widget in self.dice_canvas.winfo_children():
             widget.destroy()
 
-        res = ""
-        for i in self.result:
-            res = res + str(i) + " "
+        self.die_image = self.logic.merge_die(self.result)
+        #self.die_image = tk.PhotoImage(self.die_image)
+        #self.die_image.show()
+        self.dice_canvas.create_image((0,0), image=self.die_image, anchor=tk.NW)
+        #self.die_image = tk.PhotoImage(file="../Assets/Die/One_Number.png").subsample(5,5)
+        #self.dice_canvas.create_image((75, 75), image=self.die_image)
+        #self.dice_canvas.create_text((100,50), text="Canvas")
+        #res = ""
+        #for i in self.result:
+        #    res = res + str(i) + " "
 
-        tk.Label(master=self.dice_frame, text=res).grid(column = 0, row = 0)
+        #tk.Label(master=self.dice_canvas, text=res).grid(column = 0, row = 0)
         
     def write_to_history(self):
         print("todo")

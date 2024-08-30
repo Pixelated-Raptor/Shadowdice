@@ -13,7 +13,12 @@ class config():
     edge_left = edge
     hits = []
     misses = []
-    use_full_edge = None;
+    use_full_edge = None
+    black_dice = None
+    coloured_dice = None
+    dice_style = None    
+    highlight_hits = None
+    highlight_misses = None
     
     def __init__(self):
         if exists(self.CONFIG_NAME):
@@ -33,6 +38,13 @@ class config():
         new_config = configparser.ConfigParser()
 
         new_config["Locale"] = {"language": "en"}
+        new_config["Die"] = {
+            "black dice numbered path": "../Assets/Black_Die_Numbered/",
+            "coloured dice path": "../Assets/Coloured_Die/",
+            "dice style": "dotted",
+            "highlight hits": "False",
+            "highlight misses": "False"
+        }
         new_config["Gameplay"] = {
             "edge": 1,
             "edge left": 1,
@@ -51,15 +63,18 @@ class config():
         config.read(self.CONFIG_NAME)
         
         self.lang = config["Locale"]["language"]
+        self.black_dice = config["Die"]["black dice numbered path"]
+        self.coloured_dice = config["Die"]["coloured dice path"]
+        self.dice_style = config["Die"]["dice style"]
+        self.highlight_hits = config["Die"]["highlight hits"]
+        self.highlight_hits = bool(False) if self.highlight_hits == "False" else bool(True)
+        self.highlight_misses = config["Die"]["highlight misses"]
+        self.highlight_misses = bool(False) if self.highlight_misses == "False" else bool(True)
         self.edge = int(config["Gameplay"]["edge"])
         self.edge_left = int(config["Gameplay"]["edge left"])
         self.use_full_edge = config["Gameplay"]["use full edge"]
+        self.use_full_edge = bool(False) if self.use_full_edge == "False" else bool(True)
         
-        if self.use_full_edge == "True":
-            self.use_full_edge = bool(True)
-        else:
-            self.use_full_edge = bool(False)
-            
         # Hits and Misses need to be converted back to int
         self.hits = list(config["Gameplay"]["hits"].split(","))
         self.hits = [int(x) for x in self.hits]
