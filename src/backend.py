@@ -7,6 +7,7 @@ from PIL import ImageTk, Image
 
 class backend():
     die = None
+    DIE_SCALING = 0.17
     
     def __init__(self):
         self.die = SixSidedDie()
@@ -97,31 +98,21 @@ class backend():
         return(hits, misses, glitch,critical_glitch)
 
     def merge_die(self, result):
-        #Path to files here
-        one = Image.open("../Assets/Black_Die_Dotted/One_Dot.png")   
-        two = Image.open("../Assets/Black_Die_Dotted/Two_Dot.png")   
-        three = Image.open("../Assets/Black_Die_Dotted/Three_Dot.png")   
-        four = Image.open("../Assets/Black_Die_Dotted/Four_Dot.png")   
-        five = Image.open("../Assets/Black_Die_Dotted/Five_Dot.png")   
-        six = Image.open("../Assets/Black_Die_Dotted/Six_Dot.png")   
-        
-        num2words = {
-            1: one, 2: two, 3: three,
-            4: four, 5: five, 6: six
-        }
         #Determine dimensions of resulting image
+        size = self.die.IMG_SIZE        
+        
         if(len(result) == 1):
-            width = one.size[0]
+            width = size
             columns = 1
         elif(len(result) == 2):
-            width = one.size[0] * 2
+            width = size * 2
             columns = 2
         else:
-            width = one.size[0] * 3
+            width = size * 3
             columns = 3
 
         rows = -(-len(result) // 3)
-        height = rows * one.size[1]
+        height = rows * size
         
         #Stitch images
         image = Image.new("RGBA", (width, height))
@@ -131,15 +122,15 @@ class backend():
             for row in range(rows):
                 for column in range(columns):
                     if index < len(result):
-                        im = num2words[result[index]]
+                        im = self.die.get_die("Numbered", result[index])
                         image.paste(im, (x, y))
-                        x += one.size[0]
+                        x += size
                         index += 1
 
                 x = 0
-                y += one.size[1]
+                y += size
 
-
-        image = image.resize((int(width*0.17), int(height*0.17)))
+        image = image.resize((int(width*self.DIE_SCALING), int(height*self.DIE_SCALING)))
+        #Conversion needed for the image to useable with tk.Canvas
         image = ImageTk.PhotoImage(image=image)
         return image
