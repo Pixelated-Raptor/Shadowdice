@@ -14,9 +14,8 @@ class config():
     hits = []
     misses = []
     use_full_edge = None
-    black_dice = None
-    coloured_dice = None
     dice_style = None    
+    dice_style_options = ["dotted", "dotted coloured", "numbered", "numbered coloured"]
     highlight_hits = None
     highlight_misses = None
     
@@ -39,9 +38,7 @@ class config():
 
         new_config["Locale"] = {"language": "en"}
         new_config["Die"] = {
-            "black dice numbered path": "../Assets/Black_Die_Numbered/",
-            "coloured dice path": "../Assets/Coloured_Die/",
-            "dice style": "dotted",
+            "dice style": "Dotted",
             "highlight hits": "False",
             "highlight misses": "False"
         }
@@ -63,13 +60,14 @@ class config():
         config.read(self.CONFIG_NAME)
         
         self.lang = config["Locale"]["language"]
-        self.black_dice = config["Die"]["black dice numbered path"]
-        self.coloured_dice = config["Die"]["coloured dice path"]
+        
         self.dice_style = config["Die"]["dice style"]
+        
         self.highlight_hits = config["Die"]["highlight hits"]
         self.highlight_hits = bool(False) if self.highlight_hits == "False" else bool(True)
         self.highlight_misses = config["Die"]["highlight misses"]
         self.highlight_misses = bool(False) if self.highlight_misses == "False" else bool(True)
+        
         self.edge = int(config["Gameplay"]["edge"])
         self.edge_left = int(config["Gameplay"]["edge left"])
         self.use_full_edge = config["Gameplay"]["use full edge"]
@@ -89,6 +87,7 @@ class config():
         config = configparser.ConfigParser()
         config.read(self.CONFIG_NAME)
 
+        config["Die"]["dice style"] = self.dice_style
         config["Gameplay"]["edge"] = str(edge)
         config["Gameplay"]["edge left"] = str(edge_left)
         config["Gameplay"]["use full edge"] = str(self.use_full_edge)
@@ -118,3 +117,6 @@ class config():
             self.use_full_edge = state.get()
         else:
             self.use_full_edge = True
+
+    def die_style(self, style):
+        self.dice_style = style

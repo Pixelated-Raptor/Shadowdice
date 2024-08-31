@@ -256,18 +256,8 @@ class frontend():
         for widget in self.dice_canvas.winfo_children():
             widget.destroy()
 
-        self.die_image = self.logic.merge_die(self.result)
-        #self.die_image = tk.PhotoImage(self.die_image)
-        #self.die_image.show()
+        self.die_image = self.logic.merge_die(self.result, self.app_config.dice_style)
         self.dice_canvas.create_image((0,0), image=self.die_image, anchor=tk.NW)
-        #self.die_image = tk.PhotoImage(file="../Assets/Die/One_Number.png").subsample(5,5)
-        #self.dice_canvas.create_image((75, 75), image=self.die_image)
-        #self.dice_canvas.create_text((100,50), text="Canvas")
-        #res = ""
-        #for i in self.result:
-        #    res = res + str(i) + " "
-
-        #tk.Label(master=self.dice_canvas, text=res).grid(column = 0, row = 0)
         
     def write_to_history(self):
         print("todo")

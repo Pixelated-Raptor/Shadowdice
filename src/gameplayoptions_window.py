@@ -14,6 +14,8 @@ class gameplayoptions():
     hits4_state = None; miss2_state = None
     use_full_edge_state = None
     use_full_edge_check = None
+    die_style_label = None
+    die_style_listbox = None
 
     big_font = ("Arial", 16)
     regular_font = ("Arial", 12)
@@ -52,6 +54,9 @@ class gameplayoptions():
     def use_full_edge(self):
         self.app_config.edge_usage(self.use_full_edge_state)
 
+    def change_die_style(self, die_list, selection):
+        self.app_config.die_style(die_list[selection[0]])
+
     def spawn_gameplayoptions(self):
         self.win = tk.Toplevel(self.master)
         self.win.title(self.trans.translate("game_options"))
@@ -61,6 +66,19 @@ class gameplayoptions():
         self.layout()
 
     def init_widgets(self):
+        die_dict = {
+            self.app_config.dice_style_options[0]: self.trans.translate("dotted"),
+            self.app_config.dice_style_options[1]: self.trans.translate("dotted_coloured"),
+            self.app_config.dice_style_options[2]: self.trans.translate("numbered"),
+            self.app_config.dice_style_options[3]: self.trans.translate("numbered_coloured"),
+        }
+        die_list_trans = []
+        for x in die_dict:
+            die_list_trans.append(die_dict[x])
+
+        #Conversion needed for usage in a listbox
+        die_list_StringVar = tk.StringVar(value=die_list_trans)
+        
         self.hits4_check = tk.Checkbutton(master=self.win, text=self.trans.translate("count_4"),
                                           command=self.hit_on_4,
                                           variable=self.hits4_state)
@@ -71,10 +89,20 @@ class gameplayoptions():
                                                   text=self.trans.translate("use_full_edge"),
                                                   command=self.use_full_edge,
                                                   variable=self.use_full_edge_state)
-
+        self.die_style_label = tk.Label(master=self.win,
+                                        text=self.trans.translate("choose_style"),
+                                        font=self.regular_font)
+        self.die_style_listbox = tk.Listbox(master=self.win, height=4,
+                                            listvariable=die_list_StringVar)
+        self.die_style_listbox.bind("<<ListboxSelect>>", lambda x: self.change_die_style(
+                                    die_list_trans,
+                                    self.die_style_listbox.curselection())) 
+        
     def layout(self):
         self.hits4_check.grid(column=0, row=0)
         self.miss2_check.grid(column=0, row=1)
         self.use_full_edge_check.grid(column=0, row=2)
+        self.die_style_label.grid(column=0, row=3)
+        self.die_style_listbox.grid(column=0, row=4)
 
 
