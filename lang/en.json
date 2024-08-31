@@ -6,6 +6,7 @@
   "regain_edge": "Regain edge",
   "one_Hit": "$hits hits with $n dice",
   "n_Hits": "$hits hits with $n dice",
+  "no_Hits": "No hits with $n dice",
   "glitch": "$hits & glitch with $n dice",
   "critical_glitch": "critical gltich with $n dice",
   "throw": "Throw",

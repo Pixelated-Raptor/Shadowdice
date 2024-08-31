@@ -175,7 +175,6 @@ class frontend():
         showinfo(message=self.trans.translate("restart_app"))
 
     def spawn_gameplayoptions(self):
-        #spawn_gameplayoptions_window(self.app, self.trans, self.app_config)
         self.gameplayoptions.spawn_gameplayoptions()
 
     def bind_to_mousewheel(self, event):
@@ -185,6 +184,7 @@ class frontend():
         self.dice_canvas.unbind_all("<Mousewheel>")
 
     def on_mousewheel(self, event):
+        #https://stackoverflow.com/a/37858368
         self.dice_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 
     ###########################################################################
@@ -273,10 +273,35 @@ class frontend():
 
         self.die_image = self.logic.merge_die(self.result, self.app_config)
         self.dice_canvas.create_image((0,0), image=self.die_image, anchor=tk.NW)
+
+        self.write_to_history()
         
     def write_to_history(self):
-        print("todo")
-        
+        hits, misses, glitch, crit_glitch = self.logic.evaluate_roll(
+                                                self.result, self.app_config.hits,
+                                                self.app_config.misses)
+
+        if(hits == 1 and glitch is False):
+            print(
+                self.trans.translate("one_Hit", hits=hits, n=len(self.result))
+            )
+        elif(hits > 1 and glitch is False):
+            print(
+                self.trans.translate("n_Hits", hits=hits, n=len(self.result))
+            )
+        elif(glitch):
+            print(
+                self.trans.translate("glitch", hits=hits, n=len(self.result))
+            )
+        elif(crit_glitch):
+            print(
+                self.trans.translate("critical_glitch", n=len(self.result))
+            )
+        else:
+            print(
+                self.trans.translate("no_Hits", n=len(self.result))
+            )
+            
     ###########################################################################
     def start(self):
         self.init_widgets()

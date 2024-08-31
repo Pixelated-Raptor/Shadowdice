@@ -5,6 +5,7 @@
 import json
 import glob
 import os
+from string import Template
 
 class Translator():
     def __init__(self, translation_folder, default_locale='en'):
@@ -27,11 +28,12 @@ class Translator():
     def get_locale(self):
         return self.locale
 
-    def translate(self, key):
+    def translate(self, key, **kwargs):
         if self.locale not in self.data:
             return key
 
         text = self.data[self.locale].get(key, key)
 
-        return text        
+        return Template(text).safe_substitute(**kwargs)
+        #return text        
 

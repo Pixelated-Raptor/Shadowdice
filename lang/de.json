@@ -6,6 +6,7 @@
   "regain_edge": "Edge regenieren",
   "one_Hit": "$hits Erfolg bei $n Würfel",
   "n_Hits": "$hits Erfolge bei $n Würfel",
+  "no_Hits": "Keine Erfolge bei $n Würfel",
   "glitch": "$hits & Patzer bei $n Würfel",
   "critical_glitch": "Kritischer Patzer bei $n Würfel",
   "throw": "Würfeln",
