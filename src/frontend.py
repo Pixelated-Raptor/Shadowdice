@@ -32,7 +32,7 @@ class frontend():
     throw_btn = None; pre_edge_btn = None
     post_edge_btn = None; edge_roll_btn = None
     roll_for_edge_btn = None; reroll_misses_btn = None
-    die_image = None
+    die_image = None; dice_canvas_scrollbar = None
     
     def __init__(self):
         self.app_config = config()
@@ -42,13 +42,13 @@ class frontend():
 
         self.app = tk.Tk()
         self.app.title("Shadowdice")
-        self.app.geometry("550x650")
+        self.app.geometry("600x650")
         self.app.resizable(width=False, height=False)
         self.app.option_add("*tearOff", False)
         self.app.columnconfigure(0, weight=2)
         self.app.rowconfigure(1, weight=1)
-        self.app.columnconfigure(1, weight=1)
         self.app.columnconfigure(2, weight=1)
+        self.app.columnconfigure(3, weight=1)
         self.app.protocol("WM_DELETE_WINDOW", self.on_close)
 
         self.logic = backend()
@@ -178,6 +178,15 @@ class frontend():
         #spawn_gameplayoptions_window(self.app, self.trans, self.app_config)
         self.gameplayoptions.spawn_gameplayoptions()
 
+    def bind_to_mousewheel(self, event):
+        self.dice_canvas.bind_all("<MouseWheel>", self.on_mousewheel)
+
+    def unbind_from_mousewheel(self, event):
+        self.dice_canvas.unbind_all("<Mousewheel>")
+
+    def on_mousewheel(self, event):
+        self.dice_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
+
     ###########################################################################
     def init_widgets(self):
         self.menubar = tk.Menu(self.app)
@@ -197,7 +206,12 @@ class frontend():
         self.your_throw = tk.Label(master=self.app, text=self.trans.translate("your_throw"),
                                    height=2, font=self.big_font)
         self.dice_canvas = tk.Canvas(master=self.app, width=250, background="white",
-                                   borderwidth=2, relief="groove")
+                                   borderwidth=2, relief="groove", 
+                                   scrollregion=(0, 0, 3325, 3325))
+        self.dice_canvas_scrollbar = tk.Scrollbar(master=self.app, orient=tk.VERTICAL, command=self.dice_canvas.yview)
+        self.dice_canvas["yscrollcommand"] = self.dice_canvas_scrollbar.set
+        self.dice_canvas.bind("<Enter>", self.bind_to_mousewheel)
+        self.dice_canvas.bind("<Leave>", self.unbind_from_mousewheel)
         self.dice_canvas.grid_propagate(0)
         self.edge_attribut_spin = tk.Spinbox(master=self.app, from_=1, to=99,
                                              increment=1, width=2,
@@ -238,19 +252,20 @@ class frontend():
     def layout(self):
         self.your_throw.grid(column = 0, row = 0)
         self.dice_canvas.grid(column = 0, row = 1, rowspan = 13, sticky = "nsew")
-        self.edge_attribut_spin.grid(column = 1, row = 1, sticky = "e")
-        self.edge_attribut_label.grid(column = 2, row = 1, sticky = "w")
-        self.edge_left_entry.grid(column = 1, row = 2, sticky = "e")
-        self.edge_left_label.grid(column = 2, row = 2, sticky = "w")
-        self.regain_edge_btn.grid(column = 1, row = 3, columnspan = 2)
-        self.history_frame.grid(column = 1, row = 4, columnspan = 2, rowspan = 4, sticky = "nsew")
-        self.dice_pool_spin.grid(column = 1, row = 8, sticky = "e")
-        self.throw_btn.grid(column = 2, row = 8, sticky = "w")
-        self.pre_edge_btn.grid(column = 1, row = 9, columnspan = 2, sticky = "we")
-        self.post_edge_btn.grid(column = 1, row = 10, columnspan = 2, sticky = "we")
-        self.edge_roll_btn.grid(column = 1, row = 11, columnspan = 2, sticky = "we")
-        self.roll_for_edge_btn.grid(column = 1, row = 12, columnspan = 2, sticky = "we")
-        self.reroll_misses_btn.grid(column = 1, row = 13, columnspan = 2, sticky = "we")
+        self.dice_canvas_scrollbar.grid(column=1, row=1, rowspan=13,  sticky="ns")
+        self.edge_attribut_spin.grid(column = 2, row = 1, sticky = "e")
+        self.edge_attribut_label.grid(column = 3, row = 1, sticky = "w")
+        self.edge_left_entry.grid(column = 2, row = 2, sticky = "e")
+        self.edge_left_label.grid(column = 3, row = 2, sticky = "w")
+        self.regain_edge_btn.grid(column = 2, row = 3, columnspan = 2)
+        self.history_frame.grid(column = 2, row = 4, columnspan = 2, rowspan = 4, sticky = "nsew")
+        self.dice_pool_spin.grid(column = 2, row = 8, sticky = "e")
+        self.throw_btn.grid(column = 3, row = 8, sticky = "w")
+        self.pre_edge_btn.grid(column = 2, row = 9, columnspan = 2, sticky = "we")
+        self.post_edge_btn.grid(column = 2, row = 10, columnspan = 2, sticky = "we")
+        self.edge_roll_btn.grid(column = 2, row = 11, columnspan = 2, sticky = "we")
+        self.roll_for_edge_btn.grid(column = 2, row = 12, columnspan = 2, sticky = "we")
+        self.reroll_misses_btn.grid(column = 2, row = 13, columnspan = 2, sticky = "we")
         
     def draw_result(self):
         for widget in self.dice_canvas.winfo_children():
