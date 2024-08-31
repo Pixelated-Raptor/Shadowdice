@@ -19,6 +19,8 @@ class frontend():
     big_font = ("Arial", 16)
     regular_font = ("Arial", 12)
 
+    HISTORY_SIZE = 12
+
     gameplayoptions = None
     logic = None
 
@@ -33,6 +35,7 @@ class frontend():
     post_edge_btn = None; edge_roll_btn = None
     roll_for_edge_btn = None; reroll_misses_btn = None
     die_image = None; dice_canvas_scrollbar = None
+    summary = []
     
     def __init__(self):
         self.app_config = config()
@@ -228,7 +231,7 @@ class frontend():
                                          text=self.trans.translate("regain_edge"),
                                          command=self.regain_edge, font=self.regular_font)
         self.history_frame = tk.Frame(master=self.app, width=200, height=300,
-                                      borderwidth=2, relief="groove")
+                                      borderwidth=2, relief="groove", background="white")
         self.history_frame.grid_propagate(0)
         self.dice_pool_spin = tk.Spinbox(master=self.app, from_=1, to=99, increment=1,
                                          width=2, textvariable=self.dice_pool,
@@ -250,22 +253,22 @@ class frontend():
         
         
     def layout(self):
-        self.your_throw.grid(column = 0, row = 0)
-        self.dice_canvas.grid(column = 0, row = 1, rowspan = 13, sticky = "nsew")
-        self.dice_canvas_scrollbar.grid(column=1, row=1, rowspan=13,  sticky="ns")
-        self.edge_attribut_spin.grid(column = 2, row = 1, sticky = "e")
-        self.edge_attribut_label.grid(column = 3, row = 1, sticky = "w")
-        self.edge_left_entry.grid(column = 2, row = 2, sticky = "e")
-        self.edge_left_label.grid(column = 3, row = 2, sticky = "w")
-        self.regain_edge_btn.grid(column = 2, row = 3, columnspan = 2)
-        self.history_frame.grid(column = 2, row = 4, columnspan = 2, rowspan = 4, sticky = "nsew")
-        self.dice_pool_spin.grid(column = 2, row = 8, sticky = "e")
-        self.throw_btn.grid(column = 3, row = 8, sticky = "w")
-        self.pre_edge_btn.grid(column = 2, row = 9, columnspan = 2, sticky = "we")
-        self.post_edge_btn.grid(column = 2, row = 10, columnspan = 2, sticky = "we")
-        self.edge_roll_btn.grid(column = 2, row = 11, columnspan = 2, sticky = "we")
-        self.roll_for_edge_btn.grid(column = 2, row = 12, columnspan = 2, sticky = "we")
-        self.reroll_misses_btn.grid(column = 2, row = 13, columnspan = 2, sticky = "we")
+        self.your_throw.grid(column=0,row=0)
+        self.dice_canvas.grid(column=0,row=1,rowspan=13,sticky="nsew")
+        self.dice_canvas_scrollbar.grid(column=1,row=1,rowspan=13,sticky="ns")
+        self.edge_attribut_spin.grid(column=2,row=1,sticky="e")
+        self.edge_attribut_label.grid(column=3,row=1,sticky="w")
+        self.edge_left_entry.grid(column=2,row=2,sticky="e")
+        self.edge_left_label.grid(column=3,row=2,sticky="w")
+        self.regain_edge_btn.grid(column=2,row=3,columnspan=2)
+        self.history_frame.grid(column=2,row=4,columnspan=2,rowspan=4,sticky="nsew")
+        self.dice_pool_spin.grid(column=2,row=8,sticky="e")
+        self.throw_btn.grid(column=3,row=8,sticky="w")
+        self.pre_edge_btn.grid(column=2,row=9,columnspan=2,sticky="we")
+        self.post_edge_btn.grid(column=2,row=10,columnspan=2,sticky="we")
+        self.edge_roll_btn.grid(column=2,row=11,columnspan=2,sticky="we")
+        self.roll_for_edge_btn.grid(column=2,row=12,columnspan=2,sticky="we")
+        self.reroll_misses_btn.grid(column=2,row=13,columnspan=2,sticky="we")
         
     def draw_result(self):
         for widget in self.dice_canvas.winfo_children():
@@ -280,28 +283,29 @@ class frontend():
         hits, misses, glitch, crit_glitch = self.logic.evaluate_roll(
                                                 self.result, self.app_config.hits,
                                                 self.app_config.misses)
-
+        text = ""
+        
         if(hits == 1 and glitch is False):
-            print(
-                self.trans.translate("one_Hit", hits=hits, n=len(self.result))
-            )
+            text = self.trans.translate("one_Hit", hits=hits, n=len(self.result))
         elif(hits > 1 and glitch is False):
-            print(
-                self.trans.translate("n_Hits", hits=hits, n=len(self.result))
-            )
+            text = self.trans.translate("n_Hits", hits=hits, n=len(self.result))
         elif(glitch):
-            print(
-                self.trans.translate("glitch", hits=hits, n=len(self.result))
-            )
+            text = self.trans.translate("glitch", hits=hits, n=len(self.result))
         elif(crit_glitch):
-            print(
-                self.trans.translate("critical_glitch", n=len(self.result))
-            )
+            text = self.trans.translate("critical_glitch", n=len(self.result))
         else:
-            print(
-                self.trans.translate("no_Hits", n=len(self.result))
-            )
-            
+            text = self.trans.translate("no_Hits", n=len(self.result))
+
+        self.summary.append(tk.Label(master=self.history_frame,
+                                    text=text, font=self.regular_font,
+                                    background="white"))
+
+        if(len(self.summary) > self.HISTORY_SIZE):
+            self.summary[0].destroy()
+            self.summary.pop(0)
+        
+        for i in range(0, len(self.summary)):
+            self.summary[i].grid(column=0, row=i, sticky="w")
     ###########################################################################
     def start(self):
         self.init_widgets()
