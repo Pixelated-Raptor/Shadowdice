@@ -256,7 +256,7 @@ class frontend():
         for widget in self.dice_canvas.winfo_children():
             widget.destroy()
 
-        self.die_image = self.logic.merge_die(self.result, self.app_config.dice_style)
+        self.die_image = self.logic.merge_die(self.result, self.app_config)
         self.dice_canvas.create_image((0,0), image=self.die_image, anchor=tk.NW)
         
     def write_to_history(self):

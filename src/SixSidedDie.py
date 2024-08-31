@@ -25,8 +25,8 @@ class SixSidedDie:
         for x in range(1, len(self.NUM2WORDS) + 1):
             self.dot_die_assets[x] = Image.open(self.DOT_DIE + self.NUM2WORDS[x] + ".png")
             self.num_die_assets[x] = Image.open(self.NUM_DIE + self.NUM2WORDS[x] + ".png")
-            #self.dot_die_col_assets[x] = Image.open(self.DOT_DIE_COL + self.NUM2WORDS[x] + ".png")
-            #self.num_die_col_assets[x] = Image.open(self.NUM_DIE_COL + self.NUM2WORDS[x] + ".png")
+            self.dot_die_col_assets[x] = Image.open(self.DOT_DIE_COL + self.NUM2WORDS[x] + ".png")
+            self.num_die_col_assets[x] = Image.open(self.NUM_DIE_COL + self.NUM2WORDS[x] + ".png")
 
         self.IMG_SIZE = self.dot_die_assets[1].size[0]
 
@@ -36,12 +36,43 @@ class SixSidedDie:
                 return self.dot_die_assets[number]
             case "Numbered":
                 return self.num_die_assets[number]
-            case "Dotted Coloured":
+            case "Dotted coloured":
                 return self.num_die_col_assets[number]
-            case "Numbered Coloured":
+            case "Numbered coloured":
                 return self.dot_die_col_assets[number]
             case _:
                 return self.dot_die_assets[number]
+
+    def get_die_asset(self, config, number):
+        match config.dice_style:
+            case "Dotted":
+                return self.dot_die_assets[number]
+            case "Numbered":
+                return self.num_die_assets[number]
+            case "Dotted coloured":
+                if(number == 4 and number in config.hits):
+                    return self.dot_die_col_assets[number]
+                elif(number == 4):
+                    return self.dot_die_assets[number]
+        
+                if(number == 2 and number in config.misses):
+                    return self.dot_die_col_assets[number]
+                elif(number == 2):
+                    return self.dot_die_assets[number]
+
+                return self.dot_die_col_assets[number]
+            case "Numbered coloured":
+                if(number == 4 and number in config.hits):
+                    return self.num_die_col_assets[number]
+                elif(number == 4):
+                    return self.num_die_assets[number]
+        
+                if(number == 2 and number in config.misses):
+                    return self.num_die_col_assets[number]
+                elif(number == 2):
+                    return self.num_die_assets[number]
+
+                return self.num_die_col_assets[number]
         
     def Roll(self):
         return random.choice(self.VALUES)

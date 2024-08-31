@@ -96,7 +96,7 @@ class backend():
     
         return(hits, misses, glitch,critical_glitch)
 
-    def merge_die(self, result, die_style):
+    def merge_die(self, result, config):
         #Determine dimensions of resulting image
         size = self.die.IMG_SIZE        
         
@@ -121,7 +121,7 @@ class backend():
             for row in range(rows):
                 for column in range(columns):
                     if index < len(result):
-                        im = self.die.get_die(die_style, result[index])
+                        im = self.die.get_die_asset(config, result[index])
                         image.paste(im, (x, y))
                         x += size
                         index += 1
