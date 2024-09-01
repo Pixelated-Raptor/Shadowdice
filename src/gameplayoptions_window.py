@@ -1,13 +1,13 @@
-#================================================
-# Class for the Optionswindow of Shadowdice.
-# Toggles additional gameplayoptions.
-#================================================
 import tkinter as tk
 from translate import Translator
 from backend import *
 from config import config
 
 class gameplayoptions():
+    """
+    Class for spawning a new window with gameplayoptions
+    and writing changes to the config.
+    """
     win = None; hits4_check = None
     miss2_check = None; app_config = None
     trans = None; master = None;
@@ -62,7 +62,7 @@ class gameplayoptions():
     def spawn_gameplayoptions(self):
         self.win = tk.Toplevel(self.master)
         self.win.title(self.trans.translate("game_options"))
-        self.win.geometry("400x400")
+        self.win.geometry("350x225")
         self.win.resizable(width=False, height=False)
 
         self.win.columnconfigure(0, weight=1)
@@ -71,6 +71,7 @@ class gameplayoptions():
         self.layout()
 
     def init_widgets(self):
+        # Translate the names for the dice style options
         die_dict = {
             self.app_config.dice_style_options[0]: self.trans.translate("dotted"),
             self.app_config.dice_style_options[1]: self.trans.translate("dotted_coloured"),
@@ -81,7 +82,7 @@ class gameplayoptions():
         for x in die_dict:
             die_list_trans.append(die_dict[x])
 
-        #Conversion needed for usage in a listbox
+        # Conversion needed for usage in a listbox
         die_list_StringVar = tk.StringVar(value=die_list_trans)
         
         self.hits4_check = tk.Checkbutton(master=self.win, text=self.trans.translate("count_4"),
