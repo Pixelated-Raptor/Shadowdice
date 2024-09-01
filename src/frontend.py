@@ -9,6 +9,7 @@ from translate import Translator
 from backend import backend
 from config import config
 from gameplayoptions_window import gameplayoptions
+import re
 
 class Shadowdice():
     """
@@ -53,6 +54,9 @@ class Shadowdice():
     roll_for_edge_btn = None; reroll_misses_btn = None
     die_image = None; dice_canvas_scrollbar = None
     summary = []
+
+    # To make sure only numbers are entered into entries
+    validate = None
     
     def __init__(self):
         self.app_config = config()
@@ -69,6 +73,9 @@ class Shadowdice():
         self.app.columnconfigure(3, weight=1)
         self.app.protocol("WM_DELETE_WINDOW", self.on_close)
 
+        
+        self.validate = (self.app.register(self.validate_entry), "%P")
+        
         self.logic = backend()
         self.gameplayoptions = gameplayoptions(self.app, self.trans, self.app_config)
         
@@ -198,6 +205,19 @@ class Shadowdice():
         #Source: https://stackoverflow.com/a/37858368
         self.dice_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 
+    def validate_entry(self, input):
+        """ Validated that user input is a number. """
+        pattern = r"[1-9][0-9]?"
+
+        if re.fullmatch(pattern, input) is None:
+            return False
+
+        return True
+
+    def on_invalid_entry(self, entry):
+        """ Color text red on invalid input. """
+        entry["foreground"] = "red"
+
     def init_widgets(self):
         self.menubar = tk.Menu(self.app)
         self.app.config(menu=self.menubar)
@@ -226,7 +246,9 @@ class Shadowdice():
         self.edge_attribut_spin = tk.Spinbox(master=self.app, from_=1, to=99,
                                              increment=1, width=2,
                                              textvariable=self.edge_attribut,
-                                             font=self.regular_font)
+                                             font=self.regular_font,
+                                             validate="key",
+                                             validatecommand=self.validate)
         self.edge_attribut_label = tk.Label(master=self.app,
                                             text=self.trans.translate("edge"),
                                             font=self.regular_font)
@@ -243,7 +265,9 @@ class Shadowdice():
         self.history_frame.bind("<Destroy>", self.re_init_history)
         self.dice_pool_spin = tk.Spinbox(master=self.app, from_=1, to=99, increment=1,
                                          width=2, textvariable=self.dice_pool,
-                                         font=self.regular_font)
+                                         font=self.regular_font,
+                                         validate="key",
+                                         validatecommand=self.validate)
         self.throw_btn = tk.Button(master=self.app, text=self.trans.translate("throw"),
                                    command=self.throw, font=self.regular_font)
         self.pre_edge_btn = tk.Button(master=self.app, text=self.trans.translate("pre-edge"),
