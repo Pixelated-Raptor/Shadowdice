@@ -59,6 +59,7 @@ class Shadowdice():
         self.trans.set_locale(self.app_config.lang)
         self.app = tk.Tk()
         self.app.title("Shadowdice")
+        self.app.iconbitmap("../Assets/icon.ico")
         self.app.geometry("600x650")
         self.app.resizable(width=False, height=False)
         self.app.option_add("*tearOff", False)
