@@ -5,6 +5,14 @@ from SixSidedDie import *
 from PIL import ImageTk, Image
 
 class backend():
+    """
+    Main class for handling the logic behind Shadowdice.
+
+    Handles dice throws, implements mechanics regarding edge,
+    evaluates rolls and generates an image to visualize the
+    dice throw.    
+    """
+    
     die = None
     DIE_SCALING = 0.17
     
@@ -15,6 +23,7 @@ class backend():
         return(self.die.RollNTimes(dice_pool))
     
     def pre_edge(self, use_full_edge, pool, edge_attribut, edge_left):
+        """ Combines the dice pool with the edge pool and applies exploding sixes. """
         result = []
         if(use_full_edge):
             result = self.throw(pool + edge_attribut)
@@ -26,6 +35,10 @@ class backend():
         return result
     
     def post_edge(self, use_full_edge, edge_attribut, edge_left):
+        """
+        Throws edge dice after regular throw, applies exploding sixes
+        only to those and adds the result to the original throw.
+        """
         result = []
         if(use_full_edge):
             result = self.throw(edge_attribut)
@@ -37,7 +50,7 @@ class backend():
         return result
         
     def edge_roll(self, use_full_edge, edge_attribut, edge_left):
-        #Use either the full edge attribut or only edge left as dice pool
+        """ Throws only the edge dice and applies exploding sixes. """
         result = []
         if(use_full_edge):
             result = self.throw(edge_attribut)
@@ -47,12 +60,16 @@ class backend():
         result += self.apply_exploding_sixes(result)
 
         return result
-
-        
+    
     def roll_for_edge(self, edge):
+        """
+        Throw dice equal to the full edge attribut without
+        applying exploding sixes.
+        """
         return(self.throw(edge))
         
     def reroll_misses(self, pool, hits):
+        """ Reroll all dice that are not a hit. """
         new_pool = 0
         for x in hits:
             new_pool += pool.count(x)
@@ -60,11 +77,15 @@ class backend():
         new_pool = len(pool) - new_pool
 
         result = self.throw(new_pool)
-        result += self.apply_exploding_sixes(result)
+        #result += self.apply_exploding_sixes(result)
 
         return result
         
     def apply_exploding_sixes(self, pool):
+        """
+        If a die shows a six, roll it again.
+        This way a single die can generate multiple hits.
+        """
         sixes = pool.count(6)
         res = []
         while sixes != 0:
@@ -75,6 +96,10 @@ class backend():
         return res
             
     def evaluate_roll(self, result, HITS, MISSES):
+        """
+        Evaluates the number of hits and misses in given
+        result and checks wether or not a glitch occured.
+        """
         hits = 0
         misses = 0
         glitch = False
@@ -94,6 +119,10 @@ class backend():
         return(hits, misses, glitch,critical_glitch)
 
     def merge_die(self, result, config):
+        """
+        Generates an image to visualize the result.
+        Gets die assets depending on user settings.
+        """
         #Determine dimensions of resulting image
         size = self.die.IMG_SIZE        
         
