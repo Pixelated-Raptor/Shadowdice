@@ -1,5 +1,5 @@
 #================================================
-# Class for the frontend of Shadowdice.
+# Class for the Shadowdice of Shadowdice.
 # Handles Rendering and Events
 #================================================
 
@@ -10,19 +10,36 @@ from backend import backend
 from config import config
 from gameplayoptions_window import gameplayoptions
 
-class frontend():
-    app_config = None; app = None
-    trans = None; edge_attribut = None
-    edge_left = None; dice_pool = None
+class Shadowdice():
+    """
+    Main class of Shadowdice. Handles GUI and a bit of logic.
+
+    Delegates most of the logic to backend.py
+    Delegates gameplay options to gameplayoptions_window.py
+    Delegates persistent saving of options to config.py 
+    Delegates UI-Text and translations to translate.py
+    """
+
+    # Other custom classes
+    app_config = None; trans = None
+    gameplayoptions = None; logic = None
+
+    # Read from config at startup    
+    edge_attribut = None
+    edge_left = None; 
+    
+    # Shadowdice itself
+    app = None
+    
+    # Additional variables and constants for the UI
+    dice_pool = None
     result = None;
 
     big_font = ("Arial", 16)
     regular_font = ("Arial", 12)
 
     HISTORY_SIZE = 12
-
-    gameplayoptions = None
-    logic = None
+    TRANSLATION_PATH = "../lang"
 
     # Widgets
     menubar = None; menu_options = None
@@ -39,10 +56,8 @@ class frontend():
     
     def __init__(self):
         self.app_config = config()
-
-        self.trans = Translator("../lang")
+        self.trans = Translator(self.TRANSLATION_PATH)
         self.trans.set_locale(self.app_config.lang)
-
         self.app = tk.Tk()
         self.app.title("Shadowdice")
         self.app.geometry("600x650")
@@ -59,27 +74,27 @@ class frontend():
         
         self.edge_attribut = tk.IntVar(value=self.app_config.edge)
         self.edge_left = tk.IntVar(value=self.app_config.edge_left)
-        self.dice_pool = tk.IntVar(value=1)
+        self.dice_pool = tk.IntVar(value=6)
     
     def on_close(self):
+        """ Writes the current state of edge to the config file. """
         self.app_config.write_on_close(self.edge_attribut.get(), self.edge_left.get())
         self.app.destroy()
 
     def throw(self):
+        """ Throw as many dice as there are in the pool and then write the result. """
         self.result = self.logic.throw(self.dice_pool.get())        
-        print(self.result)
-        print(self.logic.evaluate_roll(self.result, self.app_config.hits,
-                                       self.app_config.misses))
-        print("---")
         self.draw_result()
         
     def regain_edge(self):
+        """ Increment the edge left without going above the full edge attribut. """
         if self.edge_left.get() < self.edge_attribut.get():
             self.edge_left.set(self.edge_left.get() + 1)
         elif self.edge_left.get() > self.edge_attribut.get():
             self.edge_left.set(self.edge_attribut.get())
 
     def pre_edge(self):
+        """ Throws a new pool of dice with additional edge dice. """
         #Set your dice pool, then click pre edge to throw with edge dice
         if(self.edge_left.get() > 0):
             self.result = self.logic.pre_edge(
@@ -90,13 +105,13 @@ class frontend():
 
             self.edge_left.set(self.edge_left.get() - 1)
             
-            print(self.result)
-            print(self.logic.evaluate_roll(self.result, self.app_config.hits,
-                                       self.app_config.misses))
-            print("---")
             self.draw_result()
 
     def post_edge(self):
+        """
+        Throws edge die after a pool has been thrown and adding
+        the result to the original diepool.
+        """
         if(self.edge_left.get() > 0):
             self.result += self.logic.post_edge(
                                 self.app_config.use_full_edge,
@@ -105,13 +120,10 @@ class frontend():
 
             self.edge_left.set(self.edge_left.get() - 1)
             
-            print(self.result)
-            print(self.logic.evaluate_roll(self.result, self.app_config.hits,
-                                       self.app_config.misses))
-            print("---")
             self.draw_result()
 
     def edge_roll(self):
+        """ Only throw the edge die. Consumes edge. """
         if(self.edge_left.get() > 0):
             self.result = self.logic.edge_roll(
                             self.app_config.use_full_edge,
@@ -125,28 +137,26 @@ class frontend():
             )
             self.edge_left.set(self.edge_left.get() - 1)
             
-            print(self.result)
-            print(self.logic.evaluate_roll(self.result, self.app_config.hits,
-                                       self.app_config.misses))
-            print("---")
             self.draw_result()
         
     def roll_for_edge(self):
-        #In cases when the Gamemaster wants to know how lucky
-        #the player is. Does not consume edge.
+        """
+        Throw a pool equal to your full edge attribut.
+        Exploding sixes are not applied here.
+        Does not consume edge.
+        """
         self.result = self.logic.roll_for_edge(self.edge_attribut.get())
         self.logic.evaluate_roll(self.result,
                                  self.app_config.hits,
                                  self.app_config.misses)
         
-        print(self.result)
-        print(self.logic.evaluate_roll(self.result, self.app_config.hits,
-                                       self.app_config.misses))
-        print("---")
         self.draw_result()
             
     def reroll_misses(self):
-        #Only allow rerolling if there are any misses
+        """
+        If there are any dice that are not a hit in the result,
+        reroll them.
+        """
         hits = 0
         for x in self.app_config.hits:
             hits += self.result.count(x)
@@ -163,13 +173,10 @@ class frontend():
                 self.result = temp + self.result
                 self.edge_left.set(self.edge_left.get() - 1)
                 
-                print(self.result)
-                print(self.logic.evaluate_roll(self.result, self.app_config.hits,
-                                               self.app_config.misses))
-                print("---")
                 self.draw_result()
 
     def change_language(self, lang):
+        """ Changes the language and redraws the UI. """
         self.app_config.change_language(lang)
         self.trans.set_locale(lang)
         for widget in self.app.winfo_children():
@@ -188,10 +195,9 @@ class frontend():
         self.dice_canvas.unbind_all("<Mousewheel>")
 
     def on_mousewheel(self, event):
-        #https://stackoverflow.com/a/37858368
+        #Source: https://stackoverflow.com/a/37858368
         self.dice_canvas.yview_scroll(int(-1*(event.delta/120)), "units")
 
-    ###########################################################################
     def init_widgets(self):
         self.menubar = tk.Menu(self.app)
         self.app.config(menu=self.menubar)
@@ -273,6 +279,7 @@ class frontend():
         self.reroll_misses_btn.grid(column=2,row=13,columnspan=2,sticky="we")
         
     def draw_result(self):
+        """ Dynamically creates an images from png-files to visualize the result. """
         for widget in self.dice_canvas.winfo_children():
             widget.destroy()
 
@@ -282,9 +289,15 @@ class frontend():
         self.write_to_history()
         
     def re_init_history(self, event):
+        """ self.history_frame breaks after language change without this. """
         self.summary = []
         
     def write_to_history(self):
+        """
+        Chooses a fitting summary depending on the result and writes
+        it to self.history_frame.
+        Only the last 12 results are kept.
+        """
         hits, misses, glitch, crit_glitch = self.logic.evaluate_roll(
                                                 self.result, self.app_config.hits,
                                                 self.app_config.misses)
@@ -311,12 +324,9 @@ class frontend():
         
         for i in range(0, len(self.summary)):
             self.summary[i].grid(column=0, row=i, sticky="w")
-    ###########################################################################
+            
     def start(self):
         self.init_widgets()
         self.layout()
         self.app.mainloop()
         
-############################################
-front = frontend()
-front.start()

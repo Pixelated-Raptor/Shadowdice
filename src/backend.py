@@ -79,10 +79,7 @@ class backend():
         misses = 0
         glitch = False
         critical_glitch = False
-
-        print("Eva Hits: " + str(HITS))
-        print("Eva Misses: " + str(MISSES))
-   
+        
         for i in result:
             if i in HITS:
                 hits += 1
