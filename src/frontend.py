@@ -1,8 +1,3 @@
-#================================================
-# Class for the Shadowdice of Shadowdice.
-# Handles Rendering and Events
-#================================================
-
 import tkinter as tk
 from tkinter.messagebox import showerror, showwarning, showinfo
 from translate import Translator

@@ -2,6 +2,10 @@ import random
 from PIL import Image
 
 class SixSidedDie:
+    """
+    Class representing a six sided die.
+    Also handles the die assets using PIL.Image.
+    """
     VALUES = [1, 2, 3, 4, 5, 6]
 
     DOT_DIE = "../Assets/Black_Die_Dotted/"
@@ -22,7 +26,7 @@ class SixSidedDie:
     num_die_col_assets = {}
 
     def __init__(self):
-        for x in range(1, len(self.NUM2WORDS) + 1):
+        for x in self.VALUES:
             self.dot_die_assets[x] = Image.open(self.DOT_DIE + self.NUM2WORDS[x] + ".png")
             self.num_die_assets[x] = Image.open(self.NUM_DIE + self.NUM2WORDS[x] + ".png")
             self.dot_die_col_assets[x] = Image.open(self.DOT_DIE_COL + self.NUM2WORDS[x] + ".png")
@@ -31,6 +35,7 @@ class SixSidedDie:
         self.IMG_SIZE = self.dot_die_assets[1].size[0]
 
     def get_die_asset(self, config, number):
+        """ Return requested die asset depending on user settings. """
         match config.dice_style:
             case "dotted":
                 return self.dot_die_assets[number]
@@ -62,6 +67,7 @@ class SixSidedDie:
                 return self.num_die_col_assets[number]
             
     def Roll(self):
+        """ Emulates a single die throw by choosing a random value from self.VALUES. """
         return random.choice(self.VALUES)
 
     def RollNTimes(self, n):
