@@ -65,9 +65,6 @@ class frontend():
         self.app_config.write_on_close(self.edge_attribut.get(), self.edge_left.get())
         self.app.destroy()
 
-    def placeholder_func(self):
-        print("Button pressed")
-
     def throw(self):
         self.result = self.logic.throw(self.dice_pool.get())        
         print(self.result)
@@ -175,7 +172,11 @@ class frontend():
     def change_language(self, lang):
         self.app_config.change_language(lang)
         self.trans.set_locale(lang)
-        showinfo(message=self.trans.translate("restart_app"))
+        for widget in self.app.winfo_children():
+            widget.destroy()
+
+        self.init_widgets()
+        self.layout()
 
     def spawn_gameplayoptions(self):
         self.gameplayoptions.spawn_gameplayoptions()
@@ -233,6 +234,7 @@ class frontend():
         self.history_frame = tk.Frame(master=self.app, width=200, height=300,
                                       borderwidth=2, relief="groove", background="white")
         self.history_frame.grid_propagate(0)
+        self.history_frame.bind("<Destroy>", self.re_init_history)
         self.dice_pool_spin = tk.Spinbox(master=self.app, from_=1, to=99, increment=1,
                                          width=2, textvariable=self.dice_pool,
                                          font=self.regular_font)
@@ -278,6 +280,9 @@ class frontend():
         self.dice_canvas.create_image((0,0), image=self.die_image, anchor=tk.NW)
 
         self.write_to_history()
+        
+    def re_init_history(self, event):
+        self.summary = []
         
     def write_to_history(self):
         hits, misses, glitch, crit_glitch = self.logic.evaluate_roll(
