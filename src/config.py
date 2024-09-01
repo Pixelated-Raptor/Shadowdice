@@ -96,9 +96,6 @@ class config():
 
         with open(self.CONFIG_NAME, "w") as f:
             config.write(f)
-    
-    def restore_defaults(self):
-        print("ToDo")
 
     def hit_on_4(self, checked):
         if(4 in self.hits):
@@ -119,5 +116,4 @@ class config():
             self.use_full_edge = True
 
     def change_die_style(self, style):
-        print(style)
         self.dice_style = style

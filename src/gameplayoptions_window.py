@@ -103,7 +103,10 @@ class gameplayoptions():
         self.die_style_listbox = tk.Listbox(master=self.win, height=4,
                                             listvariable=die_list_StringVar,
                                             font=self.regular_font)
-        self.die_style_listbox.select_set(0)
+        self.die_style_listbox.select_set(
+                                          self.app_config.dice_style_options.index(
+                                              self.app_config.dice_style
+                                          ))
         self.die_style_listbox.bind("<<ListboxSelect>>", lambda x: self.change_die_style(
                                     die_list_trans,
                                     self.die_style_listbox.curselection())) 
