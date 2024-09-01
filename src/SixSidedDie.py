@@ -30,26 +30,13 @@ class SixSidedDie:
 
         self.IMG_SIZE = self.dot_die_assets[1].size[0]
 
-    def get_die(self, style, number):
-        match style:
-            case "Dotted":
-                return self.dot_die_assets[number]
-            case "Numbered":
-                return self.num_die_assets[number]
-            case "Dotted coloured":
-                return self.num_die_col_assets[number]
-            case "Numbered coloured":
-                return self.dot_die_col_assets[number]
-            case _:
-                return self.dot_die_assets[number]
-
     def get_die_asset(self, config, number):
         match config.dice_style:
-            case "Dotted":
+            case "dotted":
                 return self.dot_die_assets[number]
-            case "Numbered":
+            case "numbered":
                 return self.num_die_assets[number]
-            case "Dotted coloured":
+            case "dotted coloured":
                 if(number == 4 and number in config.hits):
                     return self.dot_die_col_assets[number]
                 elif(number == 4):
@@ -61,7 +48,7 @@ class SixSidedDie:
                     return self.dot_die_assets[number]
 
                 return self.dot_die_col_assets[number]
-            case "Numbered coloured":
+            case "numbered coloured":
                 if(number == 4 and number in config.hits):
                     return self.num_die_col_assets[number]
                 elif(number == 4):
@@ -73,7 +60,7 @@ class SixSidedDie:
                     return self.num_die_assets[number]
 
                 return self.num_die_col_assets[number]
-        
+            
     def Roll(self):
         return random.choice(self.VALUES)
 

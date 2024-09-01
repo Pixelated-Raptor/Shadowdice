@@ -118,6 +118,6 @@ class config():
         else:
             self.use_full_edge = True
 
-    def die_style(self, style):
+    def change_die_style(self, style):
         print(style)
         self.dice_style = style
