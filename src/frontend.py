@@ -301,8 +301,7 @@ class Shadowdice():
                                            text=self.trans.translate("reroll_misses"),
                                            command=self.reroll_misses, font=self.regular_font)
         
-        if(self.edge_left.get() == 0):
-            self.grey_out_button()
+        self.grey_out_button()
         
     def layout(self):
         self.your_throw.grid(column=0, row=0)
@@ -338,7 +337,10 @@ class Shadowdice():
         self.summary = []
 
     def grey_out_button(self):
-        """ Grays out buttons if edge_left is at 0. """        
+        """
+        Grays out buttons if edge_left is at 0.
+        Grays out the regain edge button if current edge is full
+        """        
         if(self.edge_left.get() == 0):
             self.pre_edge_btn["state"] = "disabled"    
             self.post_edge_btn["state"] = "disabled"
@@ -351,6 +353,11 @@ class Shadowdice():
             self.edge_roll_btn["state"] = "normal"
             self.reroll_misses_btn["state"] = "normal"
             self.use_edge_btn["state"] = "normal"
+
+        if(self.edge_left.get() == self.edge_attribut.get()):
+            self.regain_edge_btn["state"] = "disabled"
+        else:
+            self.regain_edge_btn["state"] = "normal"
         
     def write_to_history(self):
         """
