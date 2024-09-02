@@ -49,6 +49,7 @@ class Shadowdice():
     post_edge_btn = None; edge_roll_btn = None
     roll_for_edge_btn = None; reroll_misses_btn = None
     die_image = None; dice_canvas_scrollbar = None
+    use_edge_btn = None
     summary = []
 
     # To make sure only numbers are entered into entries
@@ -91,13 +92,21 @@ class Shadowdice():
         
     def regain_edge(self):
         """ Increment the edge left without going above the full edge attribut. """
-        
-        if self.edge_left.get() < self.edge_attribut.get():
+        if(self.edge_left.get() < self.edge_attribut.get()):
             self.edge_left.set(self.edge_left.get() + 1)
             self.grey_out_button()
-        elif self.edge_left.get() > self.edge_attribut.get():
+        elif(self.edge_left.get() > self.edge_attribut.get()):
             self.edge_left.set(self.edge_attribut.get())
 
+    def use_edge(self):
+        """
+        Button to reduce edge by one if edge has been used by an action not related
+        to throwing dice.
+        """
+        if (self.edge_left.get() > 0):
+            self.edge_left.set(self.edge_left.get() - 1)
+            self.grey_out_button()
+        
     def pre_edge(self):
         """ Throws a new pool of dice with additional edge dice. """
         #Set your dice pool, then click pre edge to throw with edge dice
@@ -265,6 +274,9 @@ class Shadowdice():
         self.regain_edge_btn = tk.Button(master=self.app,
                                          text=self.trans.translate("regain_edge"),
                                          command=self.regain_edge, font=self.regular_font)
+        self.use_edge_btn = tk.Button(master=self.app,
+                                      text=self.trans.translate("use_edge"),
+                                      command=self.use_edge, font=self.regular_font)
         self.history_frame = tk.Frame(master=self.app, width=200, height=300,
                                       borderwidth=2, relief="groove", background="white")
         self.history_frame.grid_propagate(0)
@@ -293,22 +305,23 @@ class Shadowdice():
             self.grey_out_button()
         
     def layout(self):
-        self.your_throw.grid(column=0,row=0)
-        self.dice_canvas.grid(column=0,row=1,rowspan=13,sticky="nsew")
-        self.dice_canvas_scrollbar.grid(column=1,row=1,rowspan=13,sticky="ns")
-        self.edge_attribut_spin.grid(column=2,row=1,sticky="e")
-        self.edge_attribut_label.grid(column=3,row=1,sticky="w")
-        self.edge_left_entry.grid(column=2,row=2,sticky="e")
-        self.edge_left_label.grid(column=3,row=2,sticky="w")
-        self.regain_edge_btn.grid(column=2,row=3,columnspan=2)
-        self.history_frame.grid(column=2,row=4,columnspan=2,rowspan=4,sticky="nsew")
-        self.dice_pool_spin.grid(column=2,row=8,sticky="e")
-        self.throw_btn.grid(column=3,row=8,sticky="w")
-        self.pre_edge_btn.grid(column=2,row=9,columnspan=2,sticky="we")
-        self.post_edge_btn.grid(column=2,row=10,columnspan=2,sticky="we")
-        self.edge_roll_btn.grid(column=2,row=11,columnspan=2,sticky="we")
-        self.roll_for_edge_btn.grid(column=2,row=12,columnspan=2,sticky="we")
-        self.reroll_misses_btn.grid(column=2,row=13,columnspan=2,sticky="we")
+        self.your_throw.grid(column=0, row=0)
+        self.dice_canvas.grid(column=0, row=1, rowspan=13, sticky="nsew")
+        self.dice_canvas_scrollbar.grid(column=1, row=1, rowspan=13, sticky="ns")
+        self.edge_attribut_spin.grid(column=2, row=1, sticky="e")
+        self.edge_attribut_label.grid(column=3, row=1, sticky="w")
+        self.edge_left_entry.grid(column=2, row=2, sticky="e")
+        self.edge_left_label.grid(column=3, row=2, sticky="w")
+        self.regain_edge_btn.grid(column=2, row=3,  sticky="we")
+        self.use_edge_btn.grid(column=3,  row=3,  sticky="we")
+        self.history_frame.grid(column=2, row=4, columnspan=2, rowspan=4, sticky="nsew")
+        self.dice_pool_spin.grid(column=2, row=8, sticky="e")
+        self.throw_btn.grid(column=3, row=8, sticky="w")
+        self.pre_edge_btn.grid(column=2, row=9, columnspan=2, sticky="we")
+        self.post_edge_btn.grid(column=2, row=10, columnspan=2, sticky="we")
+        self.edge_roll_btn.grid(column=2, row=11, columnspan=2, sticky="we")
+        self.roll_for_edge_btn.grid(column=2, row=12, columnspan=2, sticky="we")
+        self.reroll_misses_btn.grid(column=2, row=13, columnspan=2, sticky="we")
         
     def draw_result(self):
         """ Dynamically creates an images from png-files to visualize the result. """
@@ -331,11 +344,13 @@ class Shadowdice():
             self.post_edge_btn["state"] = "disabled"
             self.edge_roll_btn["state"] = "disabled"
             self.reroll_misses_btn["state"] = "disabled"
+            self.use_edge_btn["state"] = "disabled"
         else:
             self.pre_edge_btn["state"] = "normal"    
             self.post_edge_btn["state"] = "normal"
             self.edge_roll_btn["state"] = "normal"
             self.reroll_misses_btn["state"] = "normal"
+            self.use_edge_btn["state"] = "normal"
         
     def write_to_history(self):
         """

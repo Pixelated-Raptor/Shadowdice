@@ -1,9 +1,10 @@
 {
   "options": "Options",
   "your_throw": "Your throw",
-  "edge": "Edge",
-  "edge_left": "Edge left",
-  "regain_edge": "Regain edge",
+  "edge": "Edgeattribut",
+  "edge_left": "Current edge",
+  "regain_edge": "Edge +",
+  "use_edge": "Edge -",
   "one_Hit": "$hits hits with $n dice",
   "n_Hits": "$hits hits with $n dice",
   "no_Hits": "No hits with $n dice",

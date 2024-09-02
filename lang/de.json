@@ -1,9 +1,10 @@
 {
   "options": "Optionen",
   "your_throw": "Dein Wurf",
-  "edge": "Edge",
-  "edge_left": "Verbleibendes Edge",
-  "regain_edge": "Edge regenieren",
+  "edge": "Edgeattribut",
+  "edge_left": "Aktuelles Edge",
+  "regain_edge": "Edge +",
+  "use_edge": "Edge -",
   "one_Hit": "$hits Erfolg bei $n Würfel",
   "n_Hits": "$hits Erfolge bei $n Würfel",
   "no_Hits": "Keine Erfolge bei $n Würfel",
