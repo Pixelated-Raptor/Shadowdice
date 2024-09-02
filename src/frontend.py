@@ -35,8 +35,9 @@ class Shadowdice():
     regular_font = ("Arial", 12)
 
     HISTORY_SIZE = 12
-    TRANSLATION_PATH = "../lang"
-
+    TRANSLATION_PATH = "_internal/lang"
+    ICON = "_internal/Assets/icon.ico"
+    
     # Widgets
     menubar = None; menu_options = None
     language_menu = None; your_throw = None
@@ -59,7 +60,7 @@ class Shadowdice():
         self.trans.set_locale(self.app_config.lang)
         self.app = tk.Tk()
         self.app.title("Shadowdice")
-        self.app.iconbitmap("../Assets/icon.ico")
+        self.app.iconbitmap(self.ICON)
         self.app.geometry("600x650")
         self.app.resizable(width=False, height=False)
         self.app.option_add("*tearOff", False)
@@ -69,7 +70,6 @@ class Shadowdice():
         self.app.columnconfigure(3, weight=1)
         self.app.protocol("WM_DELETE_WINDOW", self.on_close)
 
-        
         self.validate = (self.app.register(self.validate_entry), "%P")
         
         self.logic = backend()
@@ -91,8 +91,10 @@ class Shadowdice():
         
     def regain_edge(self):
         """ Increment the edge left without going above the full edge attribut. """
+        
         if self.edge_left.get() < self.edge_attribut.get():
             self.edge_left.set(self.edge_left.get() + 1)
+            self.grey_out_button()
         elif self.edge_left.get() > self.edge_attribut.get():
             self.edge_left.set(self.edge_attribut.get())
 
@@ -107,6 +109,8 @@ class Shadowdice():
                             self.edge_left.get())
 
             self.edge_left.set(self.edge_left.get() - 1)
+
+            self.grey_out_button()
             
             self.draw_result()
 
@@ -122,6 +126,8 @@ class Shadowdice():
                                 self.edge_left.get())
 
             self.edge_left.set(self.edge_left.get() - 1)
+
+            self.grey_out_button()
             
             self.draw_result()
 
@@ -139,6 +145,8 @@ class Shadowdice():
                             self.app_config.misses
             )
             self.edge_left.set(self.edge_left.get() - 1)
+
+            self.grey_out_button()
             
             self.draw_result()
         
@@ -176,6 +184,8 @@ class Shadowdice():
                 self.result = temp + self.result
                 self.edge_left.set(self.edge_left.get() - 1)
                 
+                self.grey_out_button()
+                    
                 self.draw_result()
 
     def change_language(self, lang):
@@ -279,6 +289,8 @@ class Shadowdice():
                                            text=self.trans.translate("reroll_misses"),
                                            command=self.reroll_misses, font=self.regular_font)
         
+        if(self.edge_left.get() == 0):
+            self.grey_out_button()
         
     def layout(self):
         self.your_throw.grid(column=0,row=0)
@@ -311,6 +323,19 @@ class Shadowdice():
     def re_init_history(self, event):
         """ self.history_frame breaks after language change without this. """
         self.summary = []
+
+    def grey_out_button(self):
+        """ Grays out buttons if edge_left is at 0. """        
+        if(self.edge_left.get() == 0):
+            self.pre_edge_btn["state"] = "disabled"    
+            self.post_edge_btn["state"] = "disabled"
+            self.edge_roll_btn["state"] = "disabled"
+            self.reroll_misses_btn["state"] = "disabled"
+        else:
+            self.pre_edge_btn["state"] = "normal"    
+            self.post_edge_btn["state"] = "normal"
+            self.edge_roll_btn["state"] = "normal"
+            self.reroll_misses_btn["state"] = "normal"
         
     def write_to_history(self):
         """

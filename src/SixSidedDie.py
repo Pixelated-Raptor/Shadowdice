@@ -8,10 +8,10 @@ class SixSidedDie:
     """
     VALUES = [1, 2, 3, 4, 5, 6]
 
-    DOT_DIE = "../Assets/Black_Die_Dotted/"
-    NUM_DIE = "../Assets/Black_Die_Numbered/"
-    DOT_DIE_COL = "../Assets/Coloured_Die_Dotted/"
-    NUM_DIE_COL = "../Assets/Coloured_Die_Numbered/"
+    DOT_DIE = "_internal/Assets/Black_Die_Dotted/"
+    NUM_DIE = "_internal/Assets/Black_Die_Numbered/"
+    DOT_DIE_COL = "_internal/Assets/Coloured_Die_Dotted/"
+    NUM_DIE_COL = "_internal/Assets/Coloured_Die_Numbered/"
 
     IMG_SIZE = None
     
