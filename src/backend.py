@@ -113,7 +113,7 @@ class backend():
                 
         if misses >= (len(result) / 2) and hits > 0:
             glitch = True
-        elif misses > (len(result) / 2) and hits == 0:
+        elif misses >= (len(result) / 2) and hits == 0:
             critical_glitch = True
     
         return(hits, misses, glitch,critical_glitch)
