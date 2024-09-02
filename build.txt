@@ -1,0 +1,12 @@
+pyinstaller --onefile --add-data "Assets;Assets" --name "Shadowdice" --noconsole .\src\main.py
+pyinstaller --onefile --add-data "Assets/*;." --name "Shadowdice" --noconsole --icon=.\Assets\icon.ico .\src\main.py
+
+pyinstaller --onedir --add-data "Assets/Black_Die_Dotted/*.png;Assets/Black_Die_Dotted/" --add-data "Assets/Black_Die_Numbered/*.png;Assets/Black_Die_Numbered/" --add-data "Assets/Coloured_Die_Dotted/*.png;Assets/Coloured_Die_Dotted" --add-data "Assets/Coloured_Die_Numbered/*.png;Assets/Coloured_Die_Numbered" --add-data "Assets/icon.ico;Assets/" --add-data "lang/*.json;lang" --name "Shadowdice" --noconsole --icon=.\Assets\icon.ico --noconfirm .\src\main.py
+
+Dependencies:
+PyInstaller
+PIL
+tkinter (should come with python)
+configparser
+json
+glob
