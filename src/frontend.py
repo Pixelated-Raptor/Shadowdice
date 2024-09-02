@@ -36,7 +36,7 @@ class Shadowdice():
 
     HISTORY_SIZE = 12
     TRANSLATION_PATH = "_internal/lang"
-    ICON = "_internal/Assets/icon.ico"
+    ICON = "_internal/Assets/icon.png"
     
     # Widgets
     menubar = None; menu_options = None
@@ -61,7 +61,8 @@ class Shadowdice():
         self.trans.set_locale(self.app_config.lang)
         self.app = tk.Tk()
         self.app.title("Shadowdice")
-        self.app.iconbitmap(self.ICON)
+        icon = tk.Image("photo", file=self.ICON)
+        self.app.tk.call("wm", "iconphoto", self.app._w, icon)
         self.app.geometry("600x650")
         self.app.resizable(width=False, height=False)
         self.app.option_add("*tearOff", False)

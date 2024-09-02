@@ -5,7 +5,7 @@ a = Analysis(
     ['src\\main.py'],
     pathex=[],
     binaries=[],
-    datas=[('Assets/Black_Die_Dotted/*.png', 'Assets/Black_Die_Dotted/'), ('Assets/Black_Die_Numbered/*.png', 'Assets/Black_Die_Numbered/'), ('Assets/Coloured_Die_Dotted/*.png', 'Assets/Coloured_Die_Dotted'), ('Assets/Coloured_Die_Numbered/*.png', 'Assets/Coloured_Die_Numbered'), ('Assets/icon.ico', 'Assets/'), ('lang/*.json', 'lang')],
+    datas=[('Assets/Black_Die_Dotted/*.png', 'Assets/Black_Die_Dotted/'), ('Assets/Black_Die_Numbered/*.png', 'Assets/Black_Die_Numbered/'), ('Assets/Coloured_Die_Dotted/*.png', 'Assets/Coloured_Die_Dotted'), ('Assets/Coloured_Die_Numbered/*.png', 'Assets/Coloured_Die_Numbered'), ('Assets/icon.png', 'Assets/'), ('lang/*.json', 'lang')],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -32,7 +32,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=['Assets\\icon.ico'],
+    icon=['Assets\\icon.png'],
 )
 coll = COLLECT(
     exe,
