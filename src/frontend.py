@@ -264,7 +264,8 @@ class Shadowdice():
                                              textvariable=self.edge_attribut,
                                              font=self.regular_font,
                                              validate="key",
-                                             validatecommand=self.validate)
+                                             validatecommand=self.validate,
+                                             command=self.grey_out_button)
         self.edge_attribut_label = tk.Label(master=self.app,
                                             text=self.trans.translate("edge"),
                                             font=self.regular_font)

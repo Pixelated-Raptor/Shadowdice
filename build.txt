@@ -9,7 +9,7 @@ pyinstaller --onedir --add-data "Assets/Black_Die_Dotted/*.png:Assets/Black_Die_
 
 Dependencies:
 PyInstaller
-PIL
+pillow
 tkinter (should come with python)
 configparser
 json
