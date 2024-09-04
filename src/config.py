@@ -16,8 +16,6 @@ class config():
     use_full_edge = None
     dice_style = None    
     dice_style_options = ["dotted", "dotted coloured", "numbered", "numbered coloured"]
-    highlight_hits = None
-    highlight_misses = None
     
     def __init__(self):
         """ Create a new config file if none is found. """
@@ -41,9 +39,7 @@ class config():
 
         new_config["Locale"] = {"language": "en"}
         new_config["Die"] = {
-            "dice style": "Dotted",
-            "highlight hits": "False",
-            "highlight misses": "False"
+            "dice style": "Dotted"
         }
         new_config["Gameplay"] = {
             "edge": 1,
@@ -75,12 +71,6 @@ class config():
         self.dice_style = config["Die"]["dice style"]
         if self.dice_style not in self.dice_style_options:
             self.dice_style = self.dice_style_options[0]
-        
-        self.highlight_hits = config["Die"]["highlight hits"]
-        self.highlight_hits = bool(False) if self.highlight_hits == "False" else bool(True)
-        
-        self.highlight_misses = config["Die"]["highlight misses"]
-        self.highlight_misses = bool(False) if self.highlight_misses == "False" else bool(True)
         
         self.edge = config["Gameplay"]["edge"]
         try:
