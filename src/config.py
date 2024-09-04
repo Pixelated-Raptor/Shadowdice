@@ -69,6 +69,7 @@ class config():
         except:
             self.create_config()
             
+        # Translator class checks for plausibility and assumes english as default
         self.lang = config["Locale"]["language"]
         
         self.dice_style = config["Die"]["dice style"]

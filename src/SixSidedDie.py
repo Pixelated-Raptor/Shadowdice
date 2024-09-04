@@ -1,5 +1,6 @@
 import random
 from PIL import Image
+import platform
 
 class SixSidedDie:
     """
@@ -8,10 +9,10 @@ class SixSidedDie:
     """
     VALUES = [1, 2, 3, 4, 5, 6]
 
-    DOT_DIE = "_internal/Assets/Black_Die_Dotted/"
-    NUM_DIE = "_internal/Assets/Black_Die_Numbered/"
-    DOT_DIE_COL = "_internal/Assets/Coloured_Die_Dotted/"
-    NUM_DIE_COL = "_internal/Assets/Coloured_Die_Numbered/"
+    DOT_DIE = None
+    NUM_DIE = None
+    DOT_DIE_COL = None
+    NUM_DIE_COL = None
 
     IMG_SIZE = None
     
@@ -26,6 +27,17 @@ class SixSidedDie:
     num_die_col_assets = {}
 
     def __init__(self):
+        if(platform.system() == "Darwin"):
+            self.DOT_DIE = "Assets/Black_Die_Dotted/"
+            self.NUM_DIE = "Assets/Black_Die_Numbered/"
+            self.DOT_DIE_COL = "Assets/Coloured_Die_Dotted/"
+            self.NUM_DIE_COL = "Assets/Coloured_Die_Numbered/"
+        else:
+            self.DOT_DIE = "_internal/Assets/Black_Die_Dotted/"
+            self.NUM_DIE = "_internal/Assets/Black_Die_Numbered/"
+            self.DOT_DIE_COL = "_internal/Assets/Coloured_Die_Dotted/"
+            self.NUM_DIE_COL = "_internal/Assets/Coloured_Die_Numbered/"
+        
         for x in self.VALUES:
             self.dot_die_assets[x] = Image.open(self.DOT_DIE + self.NUM2WORDS[x] + ".png")
             self.num_die_assets[x] = Image.open(self.NUM_DIE + self.NUM2WORDS[x] + ".png")

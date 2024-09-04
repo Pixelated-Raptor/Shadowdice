@@ -5,6 +5,7 @@ from backend import backend
 from config import config
 from gameplayoptions_window import gameplayoptions
 import re
+import platform
 
 class Shadowdice():
     """
@@ -35,8 +36,8 @@ class Shadowdice():
     regular_font = ("Arial", 12)
 
     HISTORY_SIZE = 12
-    TRANSLATION_PATH = "_internal/lang"
-    ICON = "_internal/Assets/icon.png"
+    TRANSLATION_PATH = None
+    ICON = None
     
     # Widgets
     menubar = None; menu_options = None
@@ -56,6 +57,13 @@ class Shadowdice():
     validate = None
     
     def __init__(self):
+        if(platform.system() == "Darwin"):
+            self.TRANSLATION_PATH = "lang"            
+            self.ICON = "Assets/icon.png"
+        else:
+            self.TRANSLATION_PATH = "_internal/lang"
+            self.ICON = "_internal/Assets/icon.png"
+        
         self.app_config = config()
         self.trans = Translator(self.TRANSLATION_PATH)
         self.trans.set_locale(self.app_config.lang)
@@ -229,11 +237,7 @@ class Shadowdice():
             return False
 
         return True
-
-    def on_invalid_entry(self, entry):
-        """ Color text red on invalid input. """
-        entry["foreground"] = "red"
-
+    
     def init_widgets(self):
         self.menubar = tk.Menu(self.app)
         self.app.config(menu=self.menubar)
