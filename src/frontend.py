@@ -231,7 +231,8 @@ class Shadowdice():
 
     def validate_entry(self, input):
         """ Validated that user input is a number. """
-        pattern = r"[1-9][0-9]?"
+        #pattern = r"[1-9][0-9]?"
+        pattern = r"[0-9]?[0-9]?"
 
         if re.fullmatch(pattern, input) is None:
             return False
