@@ -7,9 +7,9 @@ This project is my final exam for the scripting languages module in the computer
 ---
 # Features
 The following features are planned for this application:
-- [ ] Graphical User Interface
-- [ ] Support for multiple languages (german and english for now)
-- [ ] Graphical depiction of the dice roll
-- [ ] Automatically determine the number of hits and wether or not a glitch occured
-- [ ] Keeping track of past rolls
-- [ ] Dedicated buttons for certain actions 
+- [x] Graphical User Interface
+- [x] Support for multiple languages (german and english for now)
+- [x] Graphical depiction of the dice roll
+- [x] Automatically determine the number of hits and wether or not a glitch occured
+- [x] Keeping track of past rolls
+- [x] Dedicated buttons for certain actions 
