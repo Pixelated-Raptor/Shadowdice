@@ -22,6 +22,7 @@ Mind you that there is no download available for MacOS. We are able to build and
 But downloading the zip from the release page somehow broke the application.
 We don't know why this happens, could be an issue with code signing (because there is none).
 Your best bet to use it on MacOS is to build it yourself.
+
 ---
 # Building Shadowdice
 There are differences in building Shadowdice between Windows, Linux and MacOS.
