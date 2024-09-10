@@ -390,7 +390,7 @@ class Shadowdice():
 
         self.summary.append(tk.Label(master=self.history_frame,
                                     text=text, font=self.regular_font,
-                                    background="white"))
+                                    foreground="black", background="white"))
 
         if(len(self.summary) > self.HISTORY_SIZE):
             self.summary[0].destroy()
