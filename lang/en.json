@@ -9,7 +9,7 @@
   "n_Hits": "$hits hits with $n dice",
   "no_Hits": "No hits with $n dice",
   "glitch": "$hits hit(s) & glitch with $n dice",
-  "critical_glitch": "critical gltich with $n dice",
+  "critical_glitch": "critical glitch with $n dice",
   "throw": "Throw",
   "pre-edge": "Pre-Edge",
   "post-edge": "Post-Edge",
