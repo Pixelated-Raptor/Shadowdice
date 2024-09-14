@@ -20,10 +20,13 @@ class gameplayoptions():
     big_font = ("Arial", 16)
     regular_font = ("Arial", 12)
 
-    def __init__(self, master, trans, config):
+    ICON = None
+
+    def __init__(self, master, trans, config, icon):
         self.app_config = config
         self.trans = trans
         self.master = master
+        self.ICON = icon
         
         self.hits4_state = tk.BooleanVar(master=self.win)
         self.miss2_state = tk.BooleanVar(master=self.win)
@@ -64,6 +67,7 @@ class gameplayoptions():
         self.win.title(self.trans.translate("game_options"))
         self.win.geometry("350x225")
         self.win.resizable(width=False, height=False)
+        self.win.tk.call("wm", "iconphoto", self.win._w, self.ICON)
 
         self.win.columnconfigure(0, weight=1)
 

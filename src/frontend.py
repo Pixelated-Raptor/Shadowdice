@@ -83,7 +83,7 @@ class Shadowdice():
         self.validate = (self.app.register(self.validate_entry), "%P")
         
         self.logic = backend()
-        self.gameplayoptions = gameplayoptions(self.app, self.trans, self.app_config)
+        self.gameplayoptions = gameplayoptions(self.app, self.trans, self.app_config, icon)
         
         self.edge_attribut = tk.IntVar(value=self.app_config.edge)
         self.edge_left = tk.IntVar(value=self.app_config.edge_left)
